@@ -4,16 +4,7 @@
  * Colors: {{fg}} {{fg-muted}} {{card-buttons}} {{card}}, and {{qs-active}}
  * {{qs-active-fg}} for today in the calendar and the media player.
  * Also: {{stack-second}} {{stack-lower}}, how much darker stacked notifications are.
- *
- * Every {{marker}} is filled by extension.js before loading:
- *   colors        the settings of the current mode (colors.js)
- *   {{shade}}     lights a color up on hover: st-darken in light mode, st-lighten in dark
- *   {{unshade}}   the opposite of {{shade}}, for disabled buttons
- *   {{focus}}     the tint of a focused button
- *
- * Buttons follow GNOME 48's own states: hover +4%, click +9%, focus 5% tint,
- * disabled 3% the other way. Extension stylesheets rank above GNOME's whatever the
- * specificity, so every state GNOME draws has to be written again here.
+ * Markers and button states: see README.md in this folder.
  */
 
 

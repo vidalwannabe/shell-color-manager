@@ -59,6 +59,27 @@ export const COLORS = {
     },
 };
 
+// Words a color setting can hold instead of a color code: the CSS value the shell uses, and
+// what the preferences show (the swatch, 'accent' being the accent color set in GNOME
+// Settings, and a line under the code in its tooltip).
+export const COLOR_WORDS = {
+    'accent': {css: '-st-accent-color', swatch: 'accent', label: 'Accent color set in\nGNOME Settings › Appearance'},
+    'accent-fg': {css: '-st-accent-fg-color', swatch: '#ffffff', label: 'Accent text color'},
+};
+
+// Accepted color codes: #rgb, #rrggbb, rgb()/rgba() or a name.
+const COLOR_RE = /^(#[0-9a-f]{3}|#[0-9a-f]{6}|rgba?\([\d\s.,]+\)|[a-z]+)$/i;
+
+// A color setting as saved: a code or a word of COLOR_WORDS. Anything else (empty, edited in
+// dconf or from an older version) counts as the color's default, so it never breaks the
+// stylesheets.
+export function readColor(settings, key) {
+    const value = settings.get_string(key).trim();
+    if (COLOR_WORDS[value] || COLOR_RE.test(value))
+        return value;
+    return settings.get_default_value(key).unpack();
+}
+
 // Every color name, in the order color sets save them.
 export const COLOR_NAMES = ['panel-fg', 'general', 'dash', 'qs-fg', 'qs-button', 'qs-active-fg', 'qs-active',
     'highlight', 'fg', 'fg-muted', 'card-buttons', 'card'];

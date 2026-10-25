@@ -10,7 +10,7 @@ export const SELECTOR_CSS =
     'list.lmm-profile-list button { min-height: 26px; min-width: 26px; padding: 0; }';
 
 // A color set group: one row with a selector button and `addButton`. The selector lists the
-// color sets of `model` (profiles.js), checks the one the current colors match and applies
+// color sets of `model` (colorSets.js), checks the one the current colors match and applies
 // the one clicked. Each of the user's own gets a send button (`sendTo`: {model, label} of the
 // other mode, for the Light and Dark tabs), the button editButton(set, close) makes (close()
 // closes the selector) and a delete button. describe(set) is a row's subtitle.

@@ -13,7 +13,8 @@ const TWEAK_CLASSES = {
 export class Tweaks {
     constructor(settings) {
         this._settings = settings;
-        settings.connectObject('changed', () => this._sync(), this);
+        for (const key of Object.keys(TWEAK_CLASSES))
+            settings.connectObject(`changed::${key}`, () => this._sync(), this);
         this._sync();
     }
 

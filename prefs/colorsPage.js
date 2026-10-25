@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk';
 
-import {COLORS} from '../colors.js';
+import {COLOR_WORDS, COLORS, readColor} from '../colors.js';
 import {colorSetGroup} from './colorSetSelector.js';
 import {colorSetDialog, flatButton} from './widgets.js';
 
@@ -15,13 +15,6 @@ const toHex = rgba => `#${[rgba.red, rgba.green, rgba.blue]
 const accentColor = () => {
     const rgba = Adw.StyleManager.get_default().get_accent_color_rgba?.();
     return rgba ? toHex(rgba) : '#3584e4';
-};
-
-// Words a color setting can hold instead of a color code: what the swatch shows, and what
-// the tooltip says under that color's code.
-const COLOR_WORDS = {
-    'accent': {color: accentColor, label: 'Accent color set in\nGNOME Settings › Appearance'},
-    'accent-fg': {color: () => '#ffffff', label: 'Accent text color'},
 };
 
 // The Light mode or Dark mode tab: the color set selector, then one group per block of
@@ -114,13 +107,10 @@ function colorRow(context, key, {title, subtitle}, restore) {
     // Showing the saved color also changes the button's color: that must not save it again.
     let showing = false;
     const show = () => {
-        // An empty or unreadable color counts as its default, as in the shell.
-        let value = settings.get_string(key).trim();
-        const color = new Gdk.RGBA();
-        if (!COLOR_WORDS[value] && !color.parse(value))
-            value = settings.get_default_value(key).unpack();
+        const value = readColor(settings, key);
         const word = COLOR_WORDS[value];
-        color.parse(word ? word.color() : value);
+        const color = new Gdk.RGBA();
+        color.parse(word?.swatch === 'accent' ? accentColor() : word?.swatch ?? value);
         code = toHex(color).toUpperCase();
         tooltip = word ? `${code}\n${word.label}` : code;
         showing = true;

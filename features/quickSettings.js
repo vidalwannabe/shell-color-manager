@@ -5,7 +5,8 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import {QuickMenuToggle, SystemIndicator} from 'resource:///org/gnome/shell/ui/quickSettings.js';
 
-import {createColorSets} from '../profiles.js';
+import {COLOR_NAMES} from '../colors.js';
+import {createColorSets} from '../colorSets.js';
 
 const ICON = 'preferences-desktop-appearance-symbolic';
 
@@ -64,6 +65,11 @@ class ColorSetIndicator extends SystemIndicator {
     }
 });
 
+// What the button lists: the color sets of both modes, which one was applied last, and the
+// colors they are compared with.
+const LIST_KEYS = ['profiles', 'profiles-dark', 'active-profile', 'active-profile-dark',
+    ...COLOR_NAMES.flatMap(name => [`color-${name}`, `color-${name}-dark`])];
+
 // Adds the button while the setting is on, never on the lock screen: switching color sets
 // changes the colors of the whole session, so it is not offered to whoever is in front of
 // a locked screen.
@@ -72,12 +78,9 @@ export class QuickSettingsSwitcher {
         this._settings = settings;
         this._isDark = isDark;
         this._openPreferences = openPreferences;
-        settings.connectObject('changed', (_settings, key) => {
-            if (key === 'quick-settings-profiles')
-                this._sync();
-            else
-                this.update();
-        }, this);
+        settings.connectObject('changed::quick-settings-profiles', () => this._sync(), this);
+        for (const key of LIST_KEYS)
+            settings.connectObject(`changed::${key}`, () => this.update(), this);
         Main.sessionMode.connectObject('updated', () => this._sync(), this);
         this._sync();
     }
@@ -89,6 +92,10 @@ export class QuickSettingsSwitcher {
         Main.sessionMode.disconnectObject(this);
         this._indicator?.destroy();
         this._indicator = null;
+    }
+
+    modeChanged() {
+        this.update();
     }
 
     // The mode or the colors changed. Applying a color set changes several keys at once,

@@ -6,7 +6,7 @@ import St from 'gi://St';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-import {COLOR_NAMES} from './colors.js';
+import {COLOR_NAMES, COLOR_WORDS, readColor} from './colors.js';
 import {AutoSwitch} from './features/autoSwitch.js';
 import {DashToPanel} from './features/dashToPanel.js';
 import {DesktopMenu} from './features/desktopMenu.js';
@@ -45,16 +45,6 @@ const STYLE_VALUES = {
     },
 };
 
-// Words a color setting can hold instead of a color code.
-const COLOR_WORDS = {
-    'accent': '-st-accent-color',
-    'accent-fg': '-st-accent-fg-color',
-};
-
-// Accepted color values: #rgb, #rrggbb, rgb()/rgba() or a name. Anything else (empty, edited in
-// dconf or from an older version) counts as the color's default, so it never breaks the stylesheets.
-const COLOR_RE = /^(#[0-9a-f]{3}|#[0-9a-f]{6}|rgba?\([\d\s.,]+\)|[a-z]+)$/i;
-
 // A color change fades like a mode switch when it shows on screen: the top bar always, the
 // overview and the menus only while open.
 const TOP_BAR_KEYS = ['color-general', 'color-panel-fg'];
@@ -75,7 +65,9 @@ export default class ShellColorManager extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._interface = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
-        this._template = STYLESHEETS.map(name => this._readFile(`styles/${name}`)).join('\n');
+        // Comments explain the stylesheets to people; the shell does not need them.
+        this._template = STYLESHEETS.map(name => this._readFile(`styles/${name}`)).join('\n')
+            .replace(/\/\*[\s\S]*?\*\//g, '');
         this._cacheDir = GLib.build_filenamev([GLib.get_user_cache_dir(), this.uuid]);
         this._clearCache();
         this._fileNumber = 0;
@@ -86,18 +78,17 @@ export default class ShellColorManager extends Extension {
         this._interface.connectObject('changed::color-scheme', () => this._modeChanged(), this);
         this._applyColors();
 
-        // The features of the General tab, each in its own file.
+        // The features of the General tab, each in its own file. Each has destroy(), and may
+        // have modeChanged() to hear about light and dark mode switches.
         const isDark = () => this._isDark();
         const openPreferences = () => this.openPreferences();
-        this._dashToPanel = new DashToPanel(this._settings, isDark);
-        this._quickSettings = new QuickSettingsSwitcher(this._settings, isDark, openPreferences);
         this._features = [
             new QuickSettingsMenus(this._settings),
             new Tweaks(this._settings),
             new AutoSwitch(this._settings, this._interface),
             new DesktopMenu(this._settings, openPreferences),
-            this._dashToPanel,
-            this._quickSettings,
+            new DashToPanel(this._settings, isDark),
+            new QuickSettingsSwitcher(this._settings, isDark, openPreferences),
         ];
     }
 
@@ -106,7 +97,7 @@ export default class ShellColorManager extends Extension {
     // back to GNOME's "default".
     disable() {
         this._features.forEach(feature => feature.destroy());
-        this._features = this._dashToPanel = this._quickSettings = null;
+        this._features = null;
         if (this._applyId)
             GLib.Source.remove(this._applyId);
         this._applyId = 0;
@@ -129,11 +120,8 @@ export default class ShellColorManager extends Extension {
     // The value of each color of a mode, ready for CSS.
     _colors(dark) {
         return Object.fromEntries(COLOR_NAMES.map(name => {
-            const key = `color-${name}${dark ? '-dark' : ''}`;
-            let value = this._settings.get_string(key).trim();
-            if (!COLOR_WORDS[value] && !COLOR_RE.test(value))
-                value = this._settings.get_default_value(key).unpack();
-            return [name, COLOR_WORDS[value] ?? value];
+            const value = readColor(this._settings, `color-${name}${dark ? '-dark' : ''}`);
+            return [name, COLOR_WORDS[value]?.css ?? value];
         }));
     }
 
@@ -162,8 +150,7 @@ export default class ShellColorManager extends Extension {
         syncGtk3Theme(this._interface);
         this._applyColors();
         this._restartFade();
-        this._dashToPanel?.modeChanged();
-        this._quickSettings?.update();
+        this._features?.forEach(feature => feature.modeChanged?.());
     }
 
     // ---------- Fades ----------

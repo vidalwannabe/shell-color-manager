@@ -1,7 +1,7 @@
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {ExtensionState} from 'resource:///org/gnome/shell/misc/extensionUtils.js';
 
-const DASH_TO_PANEL = 'dash-to-panel@jderose9.github.com';
+import {DASH_TO_PANEL} from '../otherExtensions.js';
 // Dash to Panel's setting that paints the panel with its own color: always off here,
 // so the panel takes the color of the stylesheets, as when Dash to Panel has none.
 const CUSTOM_COLOR_KEY = 'trans-use-custom-bg';

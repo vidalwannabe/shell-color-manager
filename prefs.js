@@ -3,7 +3,7 @@ import Gtk from 'gi://Gtk';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-import {createColorSets} from './profiles.js';
+import {createColorSets} from './colorSets.js';
 import {SELECTOR_CSS} from './prefs/colorSetSelector.js';
 import {colorsPage} from './prefs/colorsPage.js';
 import {autoSwitchOffNotice, generalPage} from './prefs/generalPage.js';

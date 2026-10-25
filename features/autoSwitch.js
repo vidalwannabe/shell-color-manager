@@ -13,10 +13,8 @@ export class AutoSwitch {
     constructor(settings, desktopSettings) {
         this._settings = settings;
         this._desktopSettings = desktopSettings;
-        settings.connectObject('changed', (_settings, key) => {
-            if (SCHEDULE_KEYS.includes(key))
-                this._start(true);
-        }, this);
+        for (const key of SCHEDULE_KEYS)
+            settings.connectObject(`changed::${key}`, () => this._start(true), this);
         desktopSettings.connectObject('changed::color-scheme', () => this._modeChanged(), this);
         this._start(false);
     }
