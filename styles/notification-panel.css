@@ -1,0 +1,297 @@
+/*
+ * NOTIFICATION PANEL: notifications, calendar, Today, World Clocks, Weather
+ * and the media player.
+ * Colors: {{fg}} {{fg-muted}} {{card-buttons}} {{card}}, and {{qs-active}}
+ * {{qs-active-fg}} for today in the calendar and the media player.
+ * Also: {{stack-second}} {{stack-lower}}, how much darker stacked notifications are.
+ *
+ * Every {{marker}} is filled by extension.js before loading:
+ *   colors        the settings of the current mode (colors.js)
+ *   {{shade}}     lights a color up on hover: st-darken in light mode, st-lighten in dark
+ *   {{unshade}}   the opposite of {{shade}}, for disabled buttons
+ *   {{focus}}     the tint of a focused button
+ *
+ * Buttons follow GNOME 48's own states: hover +4%, click +9%, focus 5% tint,
+ * disabled 3% the other way. Extension stylesheets rank above GNOME's whatever the
+ * specificity, so every state GNOME draws has to be written again here.
+ */
+
+
+/* ---- Card titles and icons ---- */
+
+.message,
+.events-button,
+.world-clocks-button,
+.weather-button,
+.datemenu-today-button,
+.message-list-controls,
+.message-list-controls .button,
+.notification-button,
+.calendar .calendar-day,
+.calendar .calendar-day.calendar-weekend,
+.calendar .calendar-month-header .calendar-month-label,
+.message .message-header .message-close-button,
+.message .message-header .message-expand-button,
+.message-notification-group .message-collapse-button,
+.message .message-header .message-header-content .message-source-title,
+.message .message-header .message-source-icon,
+.message .message-box .message-content .message-title,
+.message-notification-group .message-group-header .message-group-title,
+.events-button .events-box .events-title,
+.events-button .events-box .events-list .event-box .event-summary,
+.world-clocks-button .world-clocks-header,
+.world-clocks-button .world-clocks-grid .world-clocks-city,
+.world-clocks-button .world-clocks-grid .world-clocks-time,
+.weather-button .weather-box .weather-header-box .weather-header,
+.weather-button .weather-box .weather-grid .weather-forecast-icon,
+.weather-button .weather-box .weather-grid .weather-forecast-temp,
+.datemenu-today-button .date-label {
+  color: {{fg}};
+}
+
+/* Days of other months, dimmed. */
+.calendar .calendar-day.calendar-other-month,
+.calendar .calendar-day.calendar-other-month.calendar-weekend {
+  color: st-transparentize({{fg}}, 0.5);
+}
+
+
+/* ---- Card subtitles ---- */
+
+.message .message-box .message-content .message-body,
+.message .message-header .message-header-content .event-time,
+.events-button .events-box .events-list .event-box .event-time,
+.events-button .events-box .events-list .event-placeholder,
+.world-clocks-button .world-clocks-grid .world-clocks-timezone,
+.weather-button .weather-box .weather-header-box .weather-header.location,
+.weather-button .weather-box .weather-grid .weather-forecast-time,
+.datemenu-today-button .day-label,
+.calendar .calendar-week-number {
+  color: {{fg-muted}};
+}
+
+
+/* ---- Card buttons: notification actions, close, expand and collapse ---- */
+
+.notification-button,
+.message .message-header .message-close-button,
+.message .message-header .message-expand-button,
+.message-notification-group .message-collapse-button {
+  background-color: {{card-buttons}};
+}
+.notification-button:hover,
+.message .message-header .message-close-button:hover,
+.message .message-header .message-expand-button:hover,
+.message-notification-group .message-collapse-button:hover {
+  background-color: {{shade}}({{card-buttons}}, 4%);
+}
+.notification-button:active,
+.message .message-header .message-close-button:active,
+.message .message-header .message-expand-button:active,
+.message-notification-group .message-collapse-button:active {
+  background-color: {{shade}}({{card-buttons}}, 9%);
+}
+.notification-button:active:hover,
+.message .message-header .message-close-button:active:hover,
+.message .message-header .message-expand-button:active:hover,
+.message-notification-group .message-collapse-button:active:hover {
+  background-color: {{shade}}({{shade}}({{card-buttons}}, 9%), 4%);
+}
+.notification-button:focus,
+.message .message-header .message-close-button:focus,
+.message .message-header .message-expand-button:focus,
+.message-notification-group .message-collapse-button:focus {
+  background-color: st-mix({{focus}}, {{card-buttons}}, 5%);
+}
+.notification-button:focus:hover,
+.message .message-header .message-close-button:focus:hover,
+.message .message-header .message-expand-button:focus:hover,
+.message-notification-group .message-collapse-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{card-buttons}}, 4%), 5%);
+}
+.notification-button:active:focus,
+.message .message-header .message-close-button:active:focus,
+.message .message-header .message-expand-button:active:focus,
+.message-notification-group .message-collapse-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{card-buttons}}, 9%), 5%);
+}
+.notification-button:insensitive,
+.message .message-header .message-close-button:insensitive,
+.message .message-header .message-expand-button:insensitive,
+.message-notification-group .message-collapse-button:insensitive {
+  background-color: {{unshade}}({{card-buttons}}, 3%);
+}
+
+
+/* ---- Card background: notifications, banners, Today, World Clocks, Weather, Clear ---- */
+
+.message,
+.notification-banner,
+.events-button,
+.world-clocks-button,
+.weather-button,
+.message-list-controls .button {
+  background-color: {{card}};
+}
+.message:hover,
+.notification-banner:hover,
+.events-button:hover,
+.world-clocks-button:hover,
+.weather-button:hover,
+.message-list-controls .button:hover {
+  background-color: {{shade}}({{card}}, 4%);
+}
+.message:active,
+.notification-banner:active,
+.events-button:active,
+.world-clocks-button:active,
+.weather-button:active,
+.message-list-controls .button:active {
+  background-color: {{shade}}({{card}}, 9%);
+}
+.message:active:hover,
+.notification-banner:active:hover,
+.events-button:active:hover,
+.world-clocks-button:active:hover,
+.weather-button:active:hover,
+.message-list-controls .button:active:hover {
+  background-color: {{shade}}({{shade}}({{card}}, 9%), 4%);
+}
+.message:focus,
+.notification-banner:focus,
+.events-button:focus,
+.world-clocks-button:focus,
+.weather-button:focus,
+.message-list-controls .button:focus {
+  background-color: st-mix({{focus}}, {{card}}, 5%);
+}
+.message:focus:hover,
+.notification-banner:focus:hover,
+.events-button:focus:hover,
+.world-clocks-button:focus:hover,
+.weather-button:focus:hover,
+.message-list-controls .button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{card}}, 4%), 5%);
+}
+.message:active:focus,
+.notification-banner:active:focus,
+.events-button:active:focus,
+.world-clocks-button:active:focus,
+.weather-button:active:focus,
+.message-list-controls .button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{card}}, 9%), 5%);
+}
+.message:insensitive,
+.notification-banner:insensitive,
+.events-button:insensitive,
+.world-clocks-button:insensitive,
+.weather-button:insensitive,
+.message-list-controls .button:insensitive {
+  background-color: {{unshade}}({{card}}, 3%);
+}
+
+/* Stacked notifications behind the first one, darker like GNOME's. */
+.message:second-in-stack {
+  background-color: st-darken({{card}}, {{stack-second}});
+}
+.message:lower-in-stack {
+  background-color: st-darken({{card}}, {{stack-lower}});
+}
+
+
+/* ---- Do Not Disturb switch: the card color off, the accent on ---- */
+
+.message-list-controls .dnd-button .toggle-switch {
+  background-color: {{card}};
+}
+.message-list-controls .dnd-button .toggle-switch:hover {
+  background-color: {{shade}}({{card}}, 4%);
+}
+.message-list-controls .dnd-button .toggle-switch:checked {
+  background-color: -st-accent-color;
+}
+.message-list-controls .dnd-button .toggle-switch:checked:hover {
+  background-color: st-lighten(-st-accent-color, 5%);
+}
+
+
+/* ---- Today in the calendar: the active button colors ---- */
+
+.calendar .calendar-day.calendar-today {
+  background-color: {{qs-active}};
+}
+.calendar .calendar-day.calendar-today:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.calendar .calendar-day.calendar-today:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.calendar .calendar-day.calendar-today:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.calendar .calendar-day.calendar-today:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.calendar .calendar-day.calendar-today:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.calendar .calendar-day.calendar-today:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.calendar .calendar-day.calendar-today:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+.calendar .calendar-day.calendar-today {
+  color: {{qs-active-fg}};
+}
+
+/* ---- Media player: the active button colors ---- */
+
+.message.media-message {
+  background-color: {{qs-active}};
+}
+.message.media-message:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.message.media-message:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.message.media-message:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.message.media-message:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.message.media-message:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.message.media-message:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.message.media-message:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+
+/* Its playback buttons light up from the card as it is hovered (+4%). */
+.message-media-control:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 4%);
+}
+.message-media-control:active {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 9%);
+}
+.message-media-control:active:hover {
+  background-color: {{shade}}({{shade}}({{shade}}({{qs-active}}, 4%), 9%), 4%);
+}
+
+.message.media-message .message-header .message-header-content .message-source-title,
+.message.media-message .message-header .message-source-icon,
+.message.media-message .message-box .message-content .message-title,
+.message.media-message .message-box .message-content .message-body,
+.message-media-control,
+.message-media-control:hover,
+.message-media-control:active {
+  color: {{qs-active-fg}};
+}
+.message-media-control:insensitive {
+  color: st-transparentize({{qs-active-fg}}, 0.5);
+}

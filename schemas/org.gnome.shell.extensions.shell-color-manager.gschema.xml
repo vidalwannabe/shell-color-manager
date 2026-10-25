@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.shell-color-manager" path="/org/gnome/shell/extensions/shell-color-manager/">
+    <!-- Light mode. An empty or unreadable color counts as its default. -->
+    <key name="color-general" type="s"><default>'#fafafb'</default><summary>Shell background</summary></key>
+    <key name="color-fg" type="s"><default>'#000000'</default><summary>Card titles and icons</summary></key>
+    <key name="color-qs-fg" type="s"><default>'#000000'</default><summary>Idle button text and icons</summary></key>
+    <key name="color-panel-fg" type="s"><default>'#000000'</default><summary>Shell text and icons</summary></key>
+    <key name="color-fg-muted" type="s"><default>'#77767b'</default><summary>Card subtitles</summary></key>
+    <key name="color-card-buttons" type="s"><default>'#d1d1d3'</default><summary>Card buttons: the notifications' buttons</summary></key>
+    <key name="color-card" type="s"><default>'#e6e6e7'</default><summary>Card background</summary></key>
+    <key name="color-dash" type="s"><default>'#e6e6e7'</default><summary>Overview and top bar highlights</summary></key>
+    <key name="color-qs-active-fg" type="s"><default>'accent-fg'</default><summary>Active button text and icons (accent-fg: the text color GNOME uses over the accent color)</summary></key>
+    <key name="color-qs-active" type="s"><default>'accent'</default><summary>Active button background: toggles that are on and the menus they open (accent: the accent color set in GNOME Settings)</summary></key>
+    <key name="color-highlight" type="s"><default>'accent'</default><summary>Volume and brightness sliders (accent: the accent color set in GNOME Settings)</summary></key>
+    <key name="color-qs-button" type="s"><default>'#e6e6e7'</default><summary>Idle button background</summary></key>
+    <!-- Dark mode -->
+    <key name="color-general-dark" type="s"><default>'#222226'</default><summary>Shell background</summary></key>
+    <key name="color-fg-dark" type="s"><default>'#ffffff'</default><summary>Card titles and icons</summary></key>
+    <key name="color-qs-fg-dark" type="s"><default>'#ffffff'</default><summary>Idle button text and icons</summary></key>
+    <key name="color-panel-fg-dark" type="s"><default>'#ffffff'</default><summary>Shell text and icons</summary></key>
+    <key name="color-fg-muted-dark" type="s"><default>'#c0bfbc'</default><summary>Card subtitles</summary></key>
+    <key name="color-card-buttons-dark" type="s"><default>'#47474c'</default><summary>Card buttons: the notifications' buttons</summary></key>
+    <key name="color-card-dark" type="s"><default>'#343437'</default><summary>Card background</summary></key>
+    <key name="color-dash-dark" type="s"><default>'#343437'</default><summary>Overview and top bar highlights</summary></key>
+    <key name="color-qs-active-fg-dark" type="s"><default>'accent-fg'</default><summary>Active button text and icons (accent-fg: the text color GNOME uses over the accent color)</summary></key>
+    <key name="color-qs-active-dark" type="s"><default>'accent'</default><summary>Active button background: toggles that are on and the menus they open (accent: the accent color set in GNOME Settings)</summary></key>
+    <key name="color-highlight-dark" type="s"><default>'accent'</default><summary>Volume and brightness sliders (accent: the accent color set in GNOME Settings)</summary></key>
+    <key name="color-qs-button-dark" type="s"><default>'#343437'</default><summary>Idle button background</summary></key>
+    <!-- Saved color profiles: JSON list of {"name": ..., "colors": {row: color}} -->
+    <key name="profiles" type="s"><default>'[]'</default><summary>Light mode color sets</summary></key>
+    <key name="profiles-dark" type="s"><default>'[]'</default><summary>Dark mode color sets</summary></key>
+    <key name="active-profile" type="s"><default>'Light Default'</default><summary>Last applied light mode color set</summary></key>
+    <key name="active-profile-dark" type="s"><default>'Dark Default'</default><summary>Last applied dark mode color set</summary></key>
+    <!-- General profiles: JSON list of {"name": ..., "light": profile name, "dark": profile name} -->
+    <key name="general-profiles" type="s"><default>'[]'</default><summary>General color sets</summary></key>
+    <key name="active-general-profile" type="s"><default>'Default'</default><summary>Last applied general color set</summary></key>
+    <!-- General tab -->
+    <key name="transition-duration" type="i"><range min="0" max="2000"/><default>500</default><summary>Fade duration in ms when switching between light and dark mode</summary></key>
+    <key name="override-dtp-colors" type="b"><default>false</default><summary>Dash to Panel takes its panel color and opacity from this extension, with preview titles in black or white</summary></key>
+    <key name="dtp-notice-shown" type="b"><default>false</default><summary>The Dash to Panel notice was shown</summary></key>
+    <key name="hide-borders" type="b"><default>false</default><summary>Hide the borders of menus and cards</summary></key>
+    <key name="merge-arrow-buttons" type="b"><default>false</default><summary>Quick Settings arrows take their toggle's color, with no gap between them</summary></key>
+    <key name="no-qs-dimming" type="b"><default>false</default><summary>Quick Settings is not darkened while one of its menus is open</summary></key>
+    <key name="calendar-background" type="b"><default>true</default><summary>The month calendar gets the cards' color, without a pill behind each day</summary></key>
+    <!-- Automatic switch: apply a general profile at two times of day (minutes since midnight) -->
+    <key name="auto-switch" type="b"><default>false</default><summary>Switch between light and dark mode at two set times</summary></key>
+    <key name="auto-switch-1-time" type="i"><range min="0" max="1439"/><default>420</default><summary>Time of the first switch</summary></key>
+    <key name="auto-switch-1-mode" type="s"><choices><choice value='light'/><choice value='dark'/></choices><default>'light'</default><summary>Mode turned on at the first switch; the second turns on the other</summary></key>
+    <key name="auto-switch-2-time" type="i"><range min="0" max="1439"/><default>1140</default><summary>Time of the second switch</summary></key>
+    <key name="auto-switch-off-notice" type="b"><default>false</default><summary>The automatic switch was turned off because the mode was changed by hand; the preferences say so once</summary></key>
+    <key name="auto-switch-applied" type="x"><default>0</default><summary>Unix time of the last automatic switch applied</summary></key>
+    <key name="quick-settings-profiles" type="b"><default>false</default><summary>Show a general color set switcher in Quick Settings</summary></key>
+    <key name="background-menu-entry" type="b"><default>false</default><summary>Add "Shell Color Manager…" to the desktop right-click menu</summary></key>
+  </schema>
+</schemalist>

@@ -1,0 +1,514 @@
+/*
+ * SHELL: top bar, menus, OSD, switchers, overview, app grid, search and dash.
+ * Colors: {{panel-fg}} {{general}} {{dash}}
+ *
+ * Every {{marker}} is filled by extension.js before loading:
+ *   colors        the settings of the current mode (colors.js)
+ *   {{shade}}     lights a color up on hover: st-darken in light mode, st-lighten in dark
+ *   {{unshade}}   the opposite of {{shade}}, for disabled buttons
+ *   {{focus}}     the tint of a focused button
+ *
+ * Buttons follow GNOME 48's own states: hover +4%, click +9%, focus 5% tint,
+ * disabled 3% the other way. Extension stylesheets rank above GNOME's whatever the
+ * specificity, so every state GNOME draws has to be written again here.
+ */
+
+
+/* ---- Shell background ---- */
+
+.popup-menu-content,
+.candidate-popup-content,
+.switcher-list,
+.osd-window,
+.workspace-switcher,
+.resize-popup,
+#overviewGroup,
+.modal-dialog,
+#panel,
+#dash .dash-background {
+  background-color: {{general}};
+}
+
+/* The lock and login screens show the top bar over the wallpaper. */
+#panel.unlock-screen,
+#panel.login-screen {
+  background-color: transparent;
+}
+
+
+/* ---- Shell text and icons: top bar ---- */
+
+#panel .panel-button,
+#panel .panel-button.clock-display,
+#panel:overview .panel-button,
+#panel:overview .panel-button.clock-display,
+#panel .show-apps .overview-icon {
+  color: {{panel-fg}};
+}
+
+/* The workspace dots of the Activities button are drawn with a background. */
+#panel .panel-button#panelActivities .workspace-dot,
+#panel:overview .panel-button#panelActivities .workspace-dot {
+  background-color: {{panel-fg}};
+}
+
+/* The lock and login screens keep GNOME's white text over the wallpaper. */
+#panel.unlock-screen .panel-button,
+#panel.login-screen .panel-button,
+#panel.unlock-screen .panel-button.clock-display,
+#panel.login-screen .panel-button.clock-display {
+  color: #ffffff;
+}
+
+
+/* ---- Shell text and icons: menus, OSD and switchers ---- */
+
+.popup-menu-item,
+.popup-menu-item:hover,
+.popup-menu-item:focus,
+.popup-menu-item:active,
+.popup-menu-item:selected,
+.popup-menu-item:checked,
+.popup-inactive-menu-item,
+.popup-inactive-menu-item:hover,
+.popup-inactive-menu-item:focus,
+.popup-inactive-menu-item:active,
+.popup-inactive-menu-item:selected,
+.popup-inactive-menu-item:checked,
+.osd-window,
+.switcher-list,
+.switcher-list .item-box,
+.workspace-switcher,
+.resize-popup {
+  color: {{panel-fg}};
+}
+
+
+/* ---- Shell text and icons: app grid and folders ---- */
+
+.overview-tile,
+.overview-tile:hover,
+.overview-tile:focus,
+.overview-tile:active,
+.overview-tile:checked,
+.overview-tile:selected,
+.overview-tile:highlighted,
+.grid-search-result,
+.grid-search-result:hover,
+.grid-search-result:focus,
+.grid-search-result:active,
+.grid-search-result:checked,
+.grid-search-result:selected,
+.grid-search-result:highlighted,
+.app-folder,
+.app-folder:hover,
+.app-folder:focus,
+.app-folder:active,
+.app-folder:checked,
+.app-folder:selected,
+.app-folder:highlighted,
+.app-folder-dialog .overview-tile,
+.app-folder-dialog .grid-search-result,
+.app-folder-dialog .app-folder,
+.app-folder-dialog .overview-tile:hover,
+.app-folder-dialog .grid-search-result:hover,
+.app-folder-dialog .app-folder:hover,
+.app-folder-dialog .overview-tile:focus,
+.app-folder-dialog .grid-search-result:focus,
+.app-folder-dialog .app-folder:focus,
+.app-folder-dialog .overview-tile:active,
+.app-folder-dialog .grid-search-result:active,
+.app-folder-dialog .app-folder:active,
+.app-folder-dialog .overview-tile:checked,
+.app-folder-dialog .grid-search-result:checked,
+.app-folder-dialog .app-folder:checked,
+.app-folder-dialog .overview-tile:selected,
+.app-folder-dialog .grid-search-result:selected,
+.app-folder-dialog .app-folder:selected,
+.app-folder-dialog .overview-tile:highlighted,
+.app-folder-dialog .grid-search-result:highlighted,
+.app-folder-dialog .app-folder:highlighted,
+.app-folder-dialog,
+.app-folder-dialog .folder-name-container .folder-name-label,
+.app-folder-dialog .folder-name-container .folder-name-entry,
+.app-folder-dialog .folder-name-container .icon-button,
+.app-folder-dialog .folder-name-container .icon-button:hover,
+.app-folder-dialog .folder-name-container .icon-button:focus,
+.app-folder-dialog .folder-name-container .icon-button:active,
+.page-navigation-arrow,
+.page-navigation-arrow > StIcon,
+.page-navigation-arrow:hover,
+.page-navigation-arrow:active {
+  color: {{panel-fg}};
+}
+
+
+/* ---- Shell text and icons: search ---- */
+
+.list-search-result,
+.list-search-result .list-search-result-title,
+.list-search-provider-details,
+.search-statustext {
+  color: {{panel-fg}};
+}
+
+.list-search-result .list-search-result-description {
+  color: st-transparentize({{panel-fg}}, 0.3);
+}
+
+
+/* ---- Shell text and icons: search and password fields ---- */
+
+.search-entry,
+.search-entry:hover,
+.search-entry:focus,
+.unlock-dialog .login-dialog-prompt-entry,
+.unlock-dialog .login-dialog-prompt-entry:hover,
+.unlock-dialog .login-dialog-prompt-entry:focus,
+.login-dialog .login-dialog-prompt-entry,
+.login-dialog .login-dialog-prompt-entry:hover,
+.login-dialog .login-dialog-prompt-entry:focus {
+  color: {{panel-fg}};
+}
+
+.search-entry StLabel.hint-text,
+.unlock-dialog .login-dialog-prompt-entry StLabel.hint-text,
+.login-dialog .login-dialog-prompt-entry StLabel.hint-text {
+  color: st-transparentize({{panel-fg}}, 0.5);
+}
+
+
+/* ---- Highlights: search and password fields ---- */
+
+.search-entry,
+.search-entry:insensitive,
+.unlock-dialog .login-dialog-prompt-entry,
+.unlock-dialog .login-dialog-prompt-entry:insensitive,
+.login-dialog .login-dialog-prompt-entry,
+.login-dialog .login-dialog-prompt-entry:insensitive {
+  background-color: {{dash}};
+}
+
+.search-entry:hover,
+.unlock-dialog .login-dialog-prompt-entry:hover,
+.login-dialog .login-dialog-prompt-entry:hover {
+  background-color: {{shade}}({{dash}}, 4%);
+}
+
+.search-entry:focus,
+.unlock-dialog .login-dialog-prompt-entry:focus,
+.login-dialog .login-dialog-prompt-entry:focus {
+  background-color: st-mix(-st-accent-color, {{dash}}, 5%);
+}
+
+
+/* ---- Highlights: top bar buttons ----
+ * GNOME fills them with an inset shadow; the clock fills its inner .clock instead. */
+
+#panel .panel-button:hover,
+#panel .panel-button:focus,
+#panel .panel-button:active,
+#panel .panel-button:checked,
+#panel .panel-button:active:hover,
+#panel .panel-button:checked:hover,
+#panel:overview .panel-button:hover,
+#panel:overview .panel-button:focus,
+#panel:overview .panel-button:active,
+#panel:overview .panel-button:checked,
+#panel:overview .panel-button:active:hover,
+#panel:overview .panel-button:checked:hover,
+#panel .panel-button.clock-display:hover .clock,
+#panel .panel-button.clock-display:focus .clock,
+#panel .panel-button.clock-display:active .clock,
+#panel .panel-button.clock-display:checked .clock,
+#panel .panel-button.clock-display:active:hover .clock,
+#panel .panel-button.clock-display:checked:hover .clock,
+#panel:overview .panel-button.clock-display:hover .clock,
+#panel:overview .panel-button.clock-display:focus .clock,
+#panel:overview .panel-button.clock-display:active .clock,
+#panel:overview .panel-button.clock-display:checked .clock,
+#panel:overview .panel-button.clock-display:active:hover .clock,
+#panel:overview .panel-button.clock-display:checked:hover .clock {
+  box-shadow: inset 0 0 0 100px {{dash}};
+}
+
+/* The lock and login screens keep GNOME's white fills over the wallpaper. */
+#panel.unlock-screen .panel-button:hover,
+#panel.unlock-screen .panel-button:focus,
+#panel.login-screen .panel-button:hover,
+#panel.login-screen .panel-button:focus,
+#panel.unlock-screen .panel-button.clock-display:hover .clock,
+#panel.unlock-screen .panel-button.clock-display:focus .clock,
+#panel.login-screen .panel-button.clock-display:hover .clock,
+#panel.login-screen .panel-button.clock-display:focus .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.17);
+}
+
+#panel.unlock-screen .panel-button:active,
+#panel.unlock-screen .panel-button:checked,
+#panel.login-screen .panel-button:active,
+#panel.login-screen .panel-button:checked,
+#panel.unlock-screen .panel-button.clock-display:active .clock,
+#panel.unlock-screen .panel-button.clock-display:checked .clock,
+#panel.login-screen .panel-button.clock-display:active .clock,
+#panel.login-screen .panel-button.clock-display:checked .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.28);
+}
+
+#panel.unlock-screen .panel-button:active:hover,
+#panel.unlock-screen .panel-button:checked:hover,
+#panel.login-screen .panel-button:active:hover,
+#panel.login-screen .panel-button:checked:hover,
+#panel.unlock-screen .panel-button.clock-display:active:hover .clock,
+#panel.unlock-screen .panel-button.clock-display:checked:hover .clock,
+#panel.login-screen .panel-button.clock-display:active:hover .clock,
+#panel.login-screen .panel-button.clock-display:checked:hover .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.32);
+}
+
+/* The clock button itself has no fill: its inner .clock has it. */
+#panel .panel-button.clock-display,
+#panel .panel-button.clock-display:hover,
+#panel .panel-button.clock-display:focus,
+#panel .panel-button.clock-display:active,
+#panel .panel-button.clock-display:checked,
+#panel .panel-button.clock-display:active:hover,
+#panel .panel-button.clock-display:checked:hover,
+#panel:overview .panel-button.clock-display,
+#panel:overview .panel-button.clock-display:hover,
+#panel:overview .panel-button.clock-display:focus,
+#panel:overview .panel-button.clock-display:active,
+#panel:overview .panel-button.clock-display:checked,
+#panel:overview .panel-button.clock-display:active:hover,
+#panel:overview .panel-button.clock-display:checked:hover {
+  box-shadow: none;
+}
+#panel.unlock-screen .panel-button.clock-display,
+#panel.unlock-screen .panel-button.clock-display:hover,
+#panel.unlock-screen .panel-button.clock-display:focus,
+#panel.unlock-screen .panel-button.clock-display:active,
+#panel.unlock-screen .panel-button.clock-display:checked,
+#panel.unlock-screen .panel-button.clock-display:active:hover,
+#panel.unlock-screen .panel-button.clock-display:checked:hover,
+#panel.login-screen .panel-button.clock-display,
+#panel.login-screen .panel-button.clock-display:hover,
+#panel.login-screen .panel-button.clock-display:focus,
+#panel.login-screen .panel-button.clock-display:active,
+#panel.login-screen .panel-button.clock-display:checked,
+#panel.login-screen .panel-button.clock-display:active:hover,
+#panel.login-screen .panel-button.clock-display:checked:hover {
+  box-shadow: none;
+}
+
+
+/* ---- Highlights: app folders, search results and the folder edit button ---- */
+
+.app-folder,
+.list-search-result,
+.app-folder-dialog .folder-name-container .icon-button {
+  background-color: {{dash}};
+}
+.app-folder:hover,
+.list-search-result:hover,
+.app-folder-dialog .folder-name-container .icon-button:hover {
+  background-color: {{shade}}({{dash}}, 4%);
+}
+.app-folder:active,
+.list-search-result:active,
+.app-folder-dialog .folder-name-container .icon-button:active {
+  background-color: {{shade}}({{dash}}, 9%);
+}
+.app-folder:active:hover,
+.list-search-result:active:hover,
+.app-folder-dialog .folder-name-container .icon-button:active:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 9%), 4%);
+}
+.app-folder:focus,
+.list-search-result:focus,
+.app-folder-dialog .folder-name-container .icon-button:focus {
+  background-color: st-mix({{focus}}, {{dash}}, 5%);
+}
+.app-folder:focus:hover,
+.list-search-result:focus:hover,
+.app-folder-dialog .folder-name-container .icon-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 4%), 5%);
+}
+.app-folder:active:focus,
+.list-search-result:active:focus,
+.app-folder-dialog .folder-name-container .icon-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 9%), 5%);
+}
+.app-folder:insensitive,
+.list-search-result:insensitive,
+.app-folder-dialog .folder-name-container .icon-button:insensitive {
+  background-color: {{unshade}}({{dash}}, 3%);
+}
+
+/* Selected: +8%, then +4% (folders) or +7% (results) on hover. */
+.app-folder:selected,
+.app-folder:highlighted,
+.app-folder:checked,
+.list-search-result:selected,
+.list-search-result:highlighted,
+.list-search-result:checked {
+  background-color: {{shade}}({{dash}}, 8%);
+}
+.app-folder:selected:hover,
+.app-folder:highlighted:hover,
+.app-folder:checked:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 4%);
+}
+.list-search-result:hover {
+  background-color: {{shade}}({{dash}}, 7%);
+}
+.list-search-result:selected:hover,
+.list-search-result:highlighted:hover,
+.list-search-result:checked:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 7%);
+}
+
+.search-section-content,
+.app-folder-dialog {
+  background-color: {{dash}};
+}
+
+
+/* ---- Highlights: the name field of a folder ---- */
+
+.app-folder-dialog .folder-name-container .folder-name-entry,
+.app-folder-dialog .folder-name-container .folder-name-entry:insensitive {
+  background-color: {{dash}};
+}
+.app-folder-dialog .folder-name-container .folder-name-entry:hover {
+  background-color: {{shade}}({{dash}}, 4%);
+}
+.app-folder-dialog .folder-name-container .folder-name-entry:focus {
+  background-color: st-mix(-st-accent-color, {{dash}}, 5%);
+}
+
+
+/* ---- Highlights: apps in the grid, search and Alt+Tab ---- */
+
+.switcher-list .item-box:selected,
+.grid-search-result:focus,
+.grid-search-result:selected,
+.grid-search-result:highlighted,
+.grid-search-result:checked,
+.overview-tile:focus,
+.overview-tile:selected,
+.overview-tile:highlighted,
+.overview-tile:checked {
+  background-color: {{dash}};
+}
+.grid-search-result:hover,
+.overview-tile:hover {
+  background-color: {{shade}}({{dash}}, 7%);
+}
+.grid-search-result:active,
+.overview-tile:active {
+  background-color: {{shade}}({{dash}}, 9%);
+}
+
+/* Inside a folder (painted {{dash}} too), apps start at +8%. */
+.app-folder-dialog .overview-tile:focus,
+.app-folder-dialog .overview-tile:selected,
+.app-folder-dialog .overview-tile:highlighted,
+.app-folder-dialog .overview-tile:checked,
+.app-folder-dialog .grid-search-result:focus,
+.app-folder-dialog .grid-search-result:selected,
+.app-folder-dialog .grid-search-result:highlighted,
+.app-folder-dialog .grid-search-result:checked {
+  background-color: {{shade}}({{dash}}, 8%);
+}
+.app-folder-dialog .overview-tile:selected:hover,
+.app-folder-dialog .overview-tile:highlighted:hover,
+.app-folder-dialog .overview-tile:checked:hover,
+.app-folder-dialog .grid-search-result:selected:hover,
+.app-folder-dialog .grid-search-result:highlighted:hover,
+.app-folder-dialog .grid-search-result:checked:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 7%);
+}
+
+
+/* ---- Highlights: the dash and Dash to Dock ----
+ * Only the square behind each icon (.overview-icon) is painted; the tall tile
+ * around it stays transparent. Its states are set on the tile, not on the icon. */
+
+#dash .overview-tile,
+#dash .overview-tile:focus,
+#dash .overview-tile:hover,
+#dash .overview-tile:active,
+#dash .overview-tile:selected,
+#dash .overview-tile:highlighted,
+#dash .overview-tile:checked,
+#dash .overview-tile:selected:hover,
+#dash .overview-tile:highlighted:hover,
+#dash .overview-tile:checked:hover,
+#dash .show-apps,
+#dash .show-apps:focus,
+#dash .show-apps:hover,
+#dash .show-apps:active,
+#dash .show-apps:selected,
+#dash .show-apps:highlighted,
+#dash .show-apps:checked,
+#dash .show-apps:selected:hover,
+#dash .show-apps:highlighted:hover,
+#dash .show-apps:checked:hover {
+  background-color: transparent;
+}
+
+#dash .overview-tile .overview-icon,
+#dash .show-apps .overview-icon {
+  background-color: {{dash}};
+}
+#dash .overview-tile:hover .overview-icon,
+#dash .show-apps:hover .overview-icon {
+  background-color: {{shade}}({{dash}}, 7%);
+}
+#dash .overview-tile:focus .overview-icon,
+#dash .show-apps:focus .overview-icon {
+  background-color: st-mix({{focus}}, {{dash}}, 5%);
+}
+#dash .overview-tile:focus:hover .overview-icon,
+#dash .show-apps:focus:hover .overview-icon {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 7%), 5%);
+}
+#dash .overview-tile:active .overview-icon,
+#dash .show-apps:active .overview-icon {
+  background-color: {{shade}}({{dash}}, 9%);
+}
+#dash .overview-tile:active:hover .overview-icon,
+#dash .show-apps:active:hover .overview-icon {
+  background-color: {{shade}}({{shade}}({{dash}}, 9%), 7%);
+}
+#dash .overview-tile:active:focus .overview-icon,
+#dash .show-apps:active:focus .overview-icon {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 9%), 5%);
+}
+#dash .overview-tile:checked .overview-icon,
+#dash .show-apps:checked .overview-icon {
+  background-color: {{shade}}({{dash}}, 8%);
+}
+#dash .overview-tile:checked:hover .overview-icon,
+#dash .show-apps:checked:hover .overview-icon {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 7%);
+}
+#dash .overview-tile:checked:active .overview-icon,
+#dash .show-apps:checked:active .overview-icon {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 9%);
+}
+
+/* Dash to Dock's focused app: the same shade as a hovered app (+7%).
+ * !important: Dash to Dock sets its own color for it. */
+#dashtodockContainer .overview-tile.focused .overview-icon {
+  background-color: {{shade}}({{dash}}, 7%) !important;
+}
+#dashtodockContainer .overview-tile.focused:hover .overview-icon {
+  background-color: {{shade}}({{shade}}({{dash}}, 7%), 7%) !important;
+}
+#dashtodockContainer .overview-tile.focused:active .overview-icon {
+  background-color: {{shade}}({{shade}}({{dash}}, 7%), 9%) !important;
+}
+#dashtodockContainer .overview-tile.focused:active:hover .overview-icon {
+  background-color: {{shade}}({{shade}}({{shade}}({{dash}}, 7%), 9%), 7%) !important;
+}

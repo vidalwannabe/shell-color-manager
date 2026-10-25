@@ -1,0 +1,184 @@
+/*
+ * TWEAKS: options of the General tab.
+ *
+ * Each tweak starts with its own class. features/tweaks.js adds that class to the
+ * shell's main container while the tweak is on, so its rules only apply then.
+ * The class also makes these rules win over the three other stylesheets.
+ *
+ * Markers work as in the other stylesheets. Also:
+ *   {{calendar-border}}  the cards' outline: a faint line in light mode, none in dark
+ *   {{calendar-shadow}}  the cards' shadow: faint in light mode, none in dark
+ */
+
+
+/* ======================================================================
+ * Merge arrows into toggles: each arrow (›) takes its toggle's color,
+ * without the gap line between them.
+ * ====================================================================== */
+
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-separator {
+  width: 0;
+}
+
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button {
+  background-color: {{qs-button}};
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:hover {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:active {
+  background-color: {{shade}}({{qs-button}}, 9%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:focus {
+  background-color: st-mix({{focus}}, {{qs-button}}, 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 4%), 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 9%), 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:insensitive {
+  background-color: {{unshade}}({{qs-button}}, 3%);
+}
+
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked {
+  background-color: {{qs-active}};
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.scm-merge-arrows .quick-toggle-has-menu .quick-toggle-menu-button:checked:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+
+
+/* ======================================================================
+ * Calendar as card: the month calendar gets the cards' color, like Today,
+ * World Clocks and Weather below it. Its days, headings, month and arrows
+ * lose the pill GNOME paints behind them, and keep their hover.
+ * ====================================================================== */
+
+.scm-calendar-card .calendar {
+  background-color: {{card}};
+  padding: 6px;
+}
+
+/* The cards' own outline. GNOME removes the calendar's with !important. */
+.scm-calendar-card .calendar {
+  border-color: {{calendar-border}} !important;
+}
+.scm-calendar-card .calendar {
+  box-shadow: {{calendar-shadow}};
+}
+
+/* The month name and weekday headings are not reactive, so St marks them :insensitive. */
+.scm-calendar-card .calendar .calendar-day-heading,
+.scm-calendar-card .calendar .calendar-day,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label,
+.scm-calendar-card .calendar .calendar-month-header .pager-button,
+.scm-calendar-card .calendar .calendar-day-heading:insensitive,
+.scm-calendar-card .calendar .calendar-day:insensitive,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:insensitive,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:insensitive {
+  background-color: transparent;
+}
+.scm-calendar-card .calendar .calendar-day-heading:hover,
+.scm-calendar-card .calendar .calendar-day:hover,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:hover,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:hover {
+  background-color: {{shade}}({{card}}, 7%);
+}
+.scm-calendar-card .calendar .calendar-day-heading:active,
+.scm-calendar-card .calendar .calendar-day:active,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:active,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:active,
+.scm-calendar-card .calendar .calendar-day-heading:selected,
+.scm-calendar-card .calendar .calendar-day:selected,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:selected,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:selected {
+  background-color: {{shade}}({{card}}, 10%);
+}
+.scm-calendar-card .calendar .calendar-day-heading:active:hover,
+.scm-calendar-card .calendar .calendar-day:active:hover,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:active:hover,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:active:hover,
+.scm-calendar-card .calendar .calendar-day-heading:selected:hover,
+.scm-calendar-card .calendar .calendar-day:selected:hover,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:selected:hover,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:selected:hover {
+  background-color: {{shade}}({{card}}, 14%);
+}
+.scm-calendar-card .calendar .calendar-day-heading:focus,
+.scm-calendar-card .calendar .calendar-day:focus,
+.scm-calendar-card .calendar .calendar-month-header .calendar-month-label:focus,
+.scm-calendar-card .calendar .calendar-month-header .pager-button:focus {
+  background-color: st-mix({{focus}}, {{card}}, 5%);
+}
+
+/* Today keeps its circle (the rules above would clear it). */
+.scm-calendar-card .calendar .calendar-day.calendar-today {
+  background-color: {{qs-active}};
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.scm-calendar-card .calendar .calendar-day.calendar-today:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+
+
+/* ======================================================================
+ * Disable borders: menus and cards
+ * Borders stay 1px wide but transparent, so nothing changes size.
+ * Last in the file, so it also removes the outline of "Calendar as card".
+ * ====================================================================== */
+
+.scm-hide-borders .popup-menu-content,
+.scm-hide-borders .candidate-popup-content {
+  border-color: transparent;
+}
+
+/* The cards GNOME outlines in light style, and the calendar as card. */
+.scm-hide-borders .message,
+.scm-hide-borders .events-button,
+.scm-hide-borders .world-clocks-button,
+.scm-hide-borders .weather-button,
+.scm-hide-borders .datemenu-today-button,
+.scm-hide-borders .calendar {
+  border-color: transparent !important;
+  box-shadow: none;
+}

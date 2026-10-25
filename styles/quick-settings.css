@@ -1,0 +1,358 @@
+/*
+ * QUICK SETTINGS: toggles, round buttons, sliders and the menus they open.
+ * Colors: {{qs-active-fg}} {{qs-active}} {{qs-fg}} {{qs-button}} {{highlight}}
+ * Also: {{arrow-shade}}   how far an arrow (›) is from its toggle when off
+ *       {{arrow-on-mix}}  what GNOME mixes into an arrow next to a toggle that is on
+ *
+ * Every {{marker}} is filled by extension.js before loading:
+ *   colors        the settings of the current mode (colors.js)
+ *   {{shade}}     lights a color up on hover: st-darken in light mode, st-lighten in dark
+ *   {{unshade}}   the opposite of {{shade}}, for disabled buttons
+ *   {{focus}}     the tint of a focused button
+ *
+ * Buttons follow GNOME 48's own states: hover +4%, click +9%, focus 5% tint,
+ * disabled 3% the other way. Extension stylesheets rank above GNOME's whatever the
+ * specificity, so every state GNOME draws has to be written again here.
+ */
+
+
+/* Expanded menus: no border, 1px narrower on each side. */
+.quick-toggle-menu {
+  border-color: transparent;
+  margin-left: 19px;
+  margin-right: 19px;
+}
+
+
+
+/* ---- Idle button text and icons ---- */
+
+.quick-settings .button,
+.quick-settings .icon-button,
+.quick-slider .slider,
+.quick-slider .slider:hover,
+.quick-toggle-has-menu .quick-toggle-menu-button:hover,
+.quick-toggle-has-menu .quick-toggle-menu-button:focus,
+.quick-toggle-has-menu .quick-toggle-menu-button:active,
+.quick-settings .quick-toggle .quick-toggle-subtitle {
+  color: {{qs-fg}};
+}
+.quick-settings .button:insensitive,
+.quick-settings .icon-button:insensitive {
+  color: st-transparentize({{qs-fg}}, 0.5);
+}
+
+/* ---- Active button text and icons ---- */
+
+.quick-settings .quick-toggle:checked,
+.quick-settings .quick-toggle-has-menu .quick-toggle-menu-button:checked,
+.quick-settings .quick-toggle:checked .quick-toggle-subtitle,
+.quick-toggle-menu .header .icon.active {
+  color: {{qs-active-fg}};
+}
+.quick-settings .quick-toggle:checked:insensitive,
+.quick-settings .quick-toggle-has-menu .quick-toggle-menu-button:checked:insensitive {
+  color: st-transparentize({{qs-active-fg}}, 0.5);
+}
+
+/* ---- Idle button background: toggles, round buttons and slider buttons ---- */
+
+/* The part of the sliders that is not filled. */
+.quick-slider .slider {
+  -barlevel-background-color: {{qs-button}};
+}
+
+.quick-toggle,
+.quick-settings-system-item .icon-button,
+.quick-slider .icon-button {
+  background-color: {{qs-button}};
+}
+.quick-toggle:hover,
+.quick-settings-system-item .icon-button:hover,
+.quick-slider .icon-button:hover {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.quick-toggle:active,
+.quick-settings-system-item .icon-button:active,
+.quick-slider .icon-button:active {
+  background-color: {{shade}}({{qs-button}}, 9%);
+}
+.quick-toggle:active:hover,
+.quick-settings-system-item .icon-button:active:hover,
+.quick-slider .icon-button:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+}
+.quick-toggle:focus,
+.quick-settings-system-item .icon-button:focus,
+.quick-slider .icon-button:focus {
+  background-color: st-mix({{focus}}, {{qs-button}}, 5%);
+}
+.quick-toggle:focus:hover,
+.quick-settings-system-item .icon-button:focus:hover,
+.quick-slider .icon-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 4%), 5%);
+}
+.quick-toggle:active:focus,
+.quick-settings-system-item .icon-button:active:focus,
+.quick-slider .icon-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 9%), 5%);
+}
+.quick-toggle:insensitive,
+.quick-settings-system-item .icon-button:insensitive,
+.quick-slider .icon-button:insensitive {
+  background-color: {{unshade}}({{qs-button}}, 3%);
+}
+
+/* ---- Active button background: toggles that are on ---- */
+
+.quick-toggle:checked {
+  background-color: {{qs-active}};
+}
+.quick-toggle:checked:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.quick-toggle:checked:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.quick-toggle:checked:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.quick-toggle:checked:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.quick-toggle:checked:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.quick-toggle:checked:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.quick-toggle:checked:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+
+/* ---- Background Apps toggle and the close buttons of its apps ---- */
+
+.background-apps-quick-toggle,
+.background-app-item .icon-button {
+  background-color: {{qs-button}};
+}
+.background-apps-quick-toggle:hover,
+.background-app-item .icon-button:hover {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.background-apps-quick-toggle:active,
+.background-app-item .icon-button:active {
+  background-color: {{shade}}({{qs-button}}, 9%);
+}
+.background-apps-quick-toggle:active:hover,
+.background-app-item .icon-button:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+}
+.background-apps-quick-toggle:focus,
+.background-app-item .icon-button:focus {
+  background-color: st-mix({{focus}}, {{qs-button}}, 5%);
+}
+.background-apps-quick-toggle:focus:hover,
+.background-app-item .icon-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 4%), 5%);
+}
+.background-apps-quick-toggle:active:focus,
+.background-app-item .icon-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 9%), 5%);
+}
+.background-apps-quick-toggle:insensitive,
+.background-app-item .icon-button:insensitive {
+  background-color: {{unshade}}({{qs-button}}, 3%);
+}
+
+/* ---- Arrow buttons (›) next to toggles that are off: a shade apart from the toggle ---- */
+
+.quick-toggle-has-menu .quick-toggle-menu-button {
+  background-color: {{shade}}({{qs-button}}, {{arrow-shade}});
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 4%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:active {
+  background-color: {{shade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 9%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:active:hover {
+  background-color: {{shade}}({{shade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 9%), 4%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, {{arrow-shade}}), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 4%), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 9%), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:insensitive {
+  background-color: {{unshade}}({{shade}}({{qs-button}}, {{arrow-shade}}), 3%);
+}
+
+/* ---- Expanded menus (Wi-Fi, Bluetooth, Power...) of toggles that are off ----
+ * The open menu is marked :insensitive by St; it keeps its own color. */
+
+.quick-toggle-menu {
+  background-color: {{qs-button}};
+}
+.quick-toggle-menu:hover {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.quick-toggle-menu:active {
+  background-color: {{shade}}({{qs-button}}, 9%);
+}
+.quick-toggle-menu:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+}
+.quick-toggle-menu:focus {
+  background-color: st-mix({{focus}}, {{qs-button}}, 5%);
+}
+.quick-toggle-menu:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 4%), 5%);
+}
+.quick-toggle-menu:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 9%), 5%);
+}
+.quick-toggle-menu:insensitive {
+  background-color: {{unshade}}({{qs-button}}, 3%);
+}
+.quick-toggle-menu:insensitive {
+  background-color: {{qs-button}};
+}
+.quick-toggle-menu .popup-menu-item:hover,
+.quick-toggle-menu .popup-menu-item:selected,
+.quick-toggle-menu .popup-menu-item:checked {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.quick-toggle-menu .popup-menu-item:active {
+  background-color: {{shade}}({{qs-button}}, 9%);
+}
+.quick-toggle-menu .popup-menu-item:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+}
+.quick-toggle-menu .header .icon {
+  background-color: {{qs-button}};
+}
+
+.quick-toggle-menu,
+.quick-toggle-menu:insensitive,
+.quick-toggle-menu .header .title,
+.quick-toggle-menu .header .subtitle,
+.quick-toggle-menu .header .icon,
+.quick-toggle-menu .device-subtitle,
+.quick-toggle-menu .popup-inactive-menu-item,
+.quick-toggle-menu .popup-separator-menu-item,
+.quick-toggle-menu .popup-separator-menu-item StLabel,
+.quick-toggle-menu .popup-menu-item,
+.quick-toggle-menu .popup-menu-item:hover,
+.quick-toggle-menu .popup-menu-item:active,
+.quick-toggle-menu .popup-menu-item:selected,
+.quick-toggle-menu .popup-menu-item:checked {
+  color: {{qs-fg}};
+}
+.quick-toggle-menu .popup-menu-item:insensitive {
+  color: st-transparentize({{qs-fg}}, 0.5);
+}
+
+/* ---- Expanded menus of toggles that are on ----
+ * The extension adds .scm-active to a menu while its toggle is on. */
+
+.quick-toggle-menu.scm-active {
+  background-color: {{qs-active}};
+}
+.quick-toggle-menu.scm-active:hover {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.quick-toggle-menu.scm-active:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.quick-toggle-menu.scm-active:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.quick-toggle-menu.scm-active:focus {
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
+}
+.quick-toggle-menu.scm-active:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
+}
+.quick-toggle-menu.scm-active:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+}
+.quick-toggle-menu.scm-active:insensitive {
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+.quick-toggle-menu.scm-active:insensitive {
+  background-color: {{qs-active}};
+}
+.quick-toggle-menu.scm-active .popup-menu-item:hover,
+.quick-toggle-menu.scm-active .popup-menu-item:selected,
+.quick-toggle-menu.scm-active .popup-menu-item:checked {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.quick-toggle-menu.scm-active .popup-menu-item:active {
+  background-color: {{shade}}({{qs-active}}, 9%);
+}
+.quick-toggle-menu.scm-active .popup-menu-item:active:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+}
+.quick-toggle-menu .header .icon.active {
+  background-color: {{qs-active}};
+}
+
+.quick-toggle-menu.scm-active,
+.quick-toggle-menu.scm-active:insensitive,
+.quick-toggle-menu.scm-active .header .title,
+.quick-toggle-menu.scm-active .header .subtitle,
+.quick-toggle-menu.scm-active .header .icon,
+.quick-toggle-menu.scm-active .device-subtitle,
+.quick-toggle-menu.scm-active .popup-inactive-menu-item,
+.quick-toggle-menu.scm-active .popup-separator-menu-item,
+.quick-toggle-menu.scm-active .popup-separator-menu-item StLabel,
+.quick-toggle-menu.scm-active .popup-menu-item,
+.quick-toggle-menu.scm-active .popup-menu-item:hover,
+.quick-toggle-menu.scm-active .popup-menu-item:active,
+.quick-toggle-menu.scm-active .popup-menu-item:selected,
+.quick-toggle-menu.scm-active .popup-menu-item:checked {
+  color: {{qs-active-fg}};
+}
+.quick-toggle-menu.scm-active .popup-menu-item:insensitive {
+  color: st-transparentize({{qs-active-fg}}, 0.5);
+}
+
+/* ---- Arrow buttons (›) next to toggles that are on ----
+ * After the others, so they keep their own color. */
+
+.quick-toggle-has-menu .quick-toggle-menu-button:checked {
+  background-color: st-mix({{qs-active}}, {{arrow-on-mix}});
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:hover {
+  background-color: {{shade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 4%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:active {
+  background-color: {{shade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 9%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:active:hover {
+  background-color: {{shade}}({{shade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 9%), 4%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:focus {
+  background-color: st-mix({{focus}}, st-mix({{qs-active}}, {{arrow-on-mix}}), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 4%), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 9%), 5%);
+}
+.quick-toggle-has-menu .quick-toggle-menu-button:checked:insensitive {
+  background-color: {{unshade}}(st-mix({{qs-active}}, {{arrow-on-mix}}), 3%);
+}
+
+/* ---- Volume and brightness sliders ---- */
+
+.slider,
+.osd-window .level {
+  -barlevel-active-background-color: {{highlight}};
+}
