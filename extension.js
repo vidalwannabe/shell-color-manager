@@ -388,8 +388,8 @@ const DASH_TILES = ['#dash .overview-tile', '#dash .show-apps'];
 // Dash to Dock marks the app of the focused window with a fixed translucent light overlay
 // (20% of #eeeeec) that replaces the tile's color. Over a dark tile that reads as a highlight,
 // but over a light one it ends up almost the dock's own color, so the focused app looks
-// unmarked. Its tile takes the color mixed with white (dark) or black (light) instead, far
-// enough to tell at a glance, and lit like any tile on hover and click.
+// unmarked. Its tile takes the hovered tile's color instead (+7%), and is lit like any tile
+// on hover and click.
 const DASH_FOCUSED = '#dashtodockContainer .overview-tile.focused';
 function dashTilesCss(color, dark) {
     const adjust = shade(dark);
@@ -398,7 +398,7 @@ function dashTilesCss(color, dark) {
     const paint = (state, value) => rule(DASH_TILES.map(tile => `${tile}${state} .overview-icon`).join(', '),
         'background-color', value);
     const tint = base => `st-mix(${focus}, ${base}, 5%)`;
-    const current = `st-mix(${dark ? '#ffffff' : '#000000'}, ${color}, 14%)`;
+    const current = lit(color, 7);
     const paintFocused = (state, value) => rule(`${DASH_FOCUSED}${state} .overview-icon`,
         'background-color', `${value} !important`);
     return paintFocused('', current) +
