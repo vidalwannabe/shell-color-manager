@@ -5,7 +5,6 @@ import Gtk from 'gi://Gtk';
 
 import {backupGroup} from './backup.js';
 import {colorSetGroup} from './colorSetSelector.js';
-import {dashToPanelRow} from './dashToPanelRow.js';
 import {
     alert, CappedDropDown, clock, colorSetDialog, flatButton, sliderRow, SUGGESTED, switchRow, timeButton,
 } from './widgets.js';
@@ -84,7 +83,6 @@ function tweaksGroup(context) {
         'Gives the calendar the card background and removes the circles behind days');
     switchRow(context, group, 'invert-osd-colors', 'Invert slider pop-up colors',
         'The volume, brightness and workspace switcher pop-ups take the active button colors');
-    dashToPanelRow(context, group);
     return group;
 }
 

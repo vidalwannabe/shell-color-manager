@@ -12,7 +12,7 @@ const BACKUP_FILE = 'shell-color-manager-settings.json';
 // Backups made before the rename to Shell Color Manager carry the old UUID.
 const OLD_UUID = 'light-mode-manager@vidalwannabe.github.io';
 // Internal state stays out of backups: an old switch time would switch the mode on import.
-const NOT_BACKED_UP = ['auto-switch-applied', 'dtp-notice-shown', 'auto-switch-off-notice'];
+const NOT_BACKED_UP = ['auto-switch-applied', 'auto-switch-off-notice'];
 const COLOR_SET_KEYS = ['profiles', 'profiles-dark', 'general-profiles'];
 
 export function backupGroup(context, colorSets, uuid) {

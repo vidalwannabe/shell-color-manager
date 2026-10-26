@@ -37,8 +37,6 @@
     <key name="active-general-profile" type="s"><default>'Default'</default><summary>Last applied general color set</summary></key>
     <!-- General tab -->
     <key name="transition-duration" type="i"><range min="0" max="2000"/><default>500</default><summary>Fade duration in ms when switching between light and dark mode</summary></key>
-    <key name="override-dtp-colors" type="b"><default>false</default><summary>Dash to Panel takes its panel color and opacity from this extension, with preview titles in black or white</summary></key>
-    <key name="dtp-notice-shown" type="b"><default>false</default><summary>The Dash to Panel notice was shown</summary></key>
     <key name="hide-borders" type="b"><default>false</default><summary>Hide the borders of menus and cards</summary></key>
     <key name="merge-arrow-buttons" type="b"><default>false</default><summary>Quick Settings arrows take their toggle's color, with no gap between them</summary></key>
     <key name="no-qs-dimming" type="b"><default>false</default><summary>Quick Settings is not darkened while one of its menus is open</summary></key>

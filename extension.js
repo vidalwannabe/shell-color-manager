@@ -87,7 +87,7 @@ export default class ShellColorManager extends Extension {
             new Tweaks(this._settings),
             new AutoSwitch(this._settings, this._interface),
             new DesktopMenu(this._settings, openPreferences),
-            new DashToPanel(this._settings, isDark),
+            new DashToPanel(isDark),
             new QuickSettingsSwitcher(this._settings, isDark, openPreferences),
         ];
     }

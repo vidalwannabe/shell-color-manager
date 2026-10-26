@@ -8,14 +8,13 @@ const CUSTOM_COLOR_KEY = 'trans-use-custom-bg';
 // Dash to Panel's setting for the window preview titles: black or white to match the mode.
 const TITLE_COLOR_KEY = 'window-preview-title-font-color';
 
-// Makes Dash to Panel use this extension's colors. Its settings are never written: two
-// of them are answered differently while this is on, and everything else Dash to Panel
-// does (opacity, gradients, borders...) stays as it is.
+// Makes Dash to Panel use this extension's colors, always while both are on. Its settings
+// are never written: two of them are answered differently. Only the color comes from here:
+// Dash to Panel still sets its panels' opacity (theme, custom or dynamic), gradients and
+// borders itself, inline on each panel, above this extension's stylesheets.
 export class DashToPanel {
-    constructor(settings, isDark) {
-        this._settings = settings;
+    constructor(isDark) {
         this._isDark = isDark;
-        settings.connectObject('changed::override-dtp-colors', () => this._sync(), this);
         // Dash to Panel may be turned on, off or reloaded after this extension.
         Main.extensionManager.connectObject('extension-state-changed', (_manager, extension) => {
             if (extension.uuid === DASH_TO_PANEL)
@@ -25,7 +24,6 @@ export class DashToPanel {
     }
 
     destroy() {
-        this._settings.disconnectObject(this);
         Main.extensionManager.disconnectObject(this);
         this._destroyed = true;
         this._unhook();
@@ -39,9 +37,8 @@ export class DashToPanel {
     // Dash to Panel's settings object comes from its own module, already loaded by GNOME.
     async _sync() {
         const extension = Main.extensionManager.lookup(DASH_TO_PANEL);
-        const wanted = extension?.state === ExtensionState.ACTIVE && this._settings.get_boolean('override-dtp-colors');
         let dtpSettings = null;
-        if (wanted) {
+        if (extension?.state === ExtensionState.ACTIVE) {
             try {
                 const module = await import(extension.dir.get_child('extension.js').get_uri());
                 dtpSettings = module.SETTINGS ?? null;
