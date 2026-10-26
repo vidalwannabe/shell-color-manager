@@ -10,7 +10,7 @@ import {autoSwitchOffNotice, generalPage} from './prefs/generalPage.js';
 
 export default class ShellColorManagerPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
-        window.set_default_size(600, 790);
+        window.set_default_size(600, 805);
         // Narrower, the color and schedule rows squeeze their titles and controls.
         window.set_size_request(600, 185);
         window.set_search_enabled(false);
