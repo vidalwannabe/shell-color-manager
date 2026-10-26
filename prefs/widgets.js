@@ -114,58 +114,39 @@ export function switchRow(context, group, key, title, subtitle) {
     return row;
 }
 
-// A slider row bound to a number setting, snapped to `step`. Each mouse wheel notch moves
-// it by `wheelStep`.
-export function sliderRow(context, group, key, {title, subtitle, max, step, unit, wheelStep = step}) {
+// A row bound to a number setting: its value, and − and + buttons that move it by `step`,
+// from 0 to `max`. There is no other way to set it.
+export function stepperRow(context, group, key, {title, subtitle, max, step, unit}) {
     const {settings} = context;
     const row = new Adw.ActionRow({title, subtitle});
-    const scale = new Gtk.Scale({
-        adjustment: new Gtk.Adjustment({lower: 0, upper: max, step_increment: step, page_increment: step}),
-        draw_value: false, width_request: 200, valign: Gtk.Align.CENTER,
-    });
-    for (let value = 0; value <= max; value += max / 4)
-        scale.add_mark(value, Gtk.PositionType.BOTTOM, null);
-    // Fixed-width value label, so the sliders of all rows line up.
     const label = new Gtk.Label({width_chars: 7, xalign: 1, valign: Gtk.Align.CENTER});
     label.add_css_class('numeric');
+    const minus = new Gtk.Button({icon_name: 'list-remove-symbolic', tooltip_text: `−${step}${unit}`});
+    const plus = new Gtk.Button({icon_name: 'list-add-symbolic', tooltip_text: `+${step}${unit}`});
+    const buttons = new Gtk.Box({valign: Gtk.Align.CENTER});
+    buttons.add_css_class('linked');
+    buttons.append(minus);
+    buttons.append(plus);
 
-    // Showing the saved value also moves the slider: that must not save it again.
-    let showing = false;
     const show = () => {
         const value = settings.get_int(key);
         label.set_label(`${value}${unit}`);
-        showing = true;
-        scale.set_value(value);
-        showing = false;
+        minus.set_sensitive(value > 0);
+        plus.set_sensitive(value < max);
     };
     show();
-    scale.connect('value-changed', () => {
-        const value = Math.round(scale.get_value() / step) * step;
-        label.set_label(`${value}${unit}`);
-        if (!showing && value !== settings.get_int(key))
-            settings.set_int(key, value);
-    });
+    // Goes to the next multiple of `step`, should the saved value be between two.
+    const move = direction => {
+        const steps = settings.get_int(key) / step;
+        const value = (direction > 0 ? Math.floor(steps) + 1 : Math.ceil(steps) - 1) * step;
+        settings.set_int(key, Math.min(max, Math.max(0, value)));
+    };
+    minus.connect('clicked', () => move(-1));
+    plus.connect('clicked', () => move(1));
     context.watch(key, show);
 
-    // Handled before GTK's own scrolling, which moves by an uneven amount. Goes to the next
-    // multiple of wheelStep: 43 becomes 45 up, 40 down.
-    const wheel = new Gtk.EventControllerScroll({
-        flags: Gtk.EventControllerScrollFlags.VERTICAL | Gtk.EventControllerScrollFlags.DISCRETE,
-        propagation_phase: Gtk.PropagationPhase.CAPTURE,
-    });
-    wheel.connect('scroll', (_controller, _dx, dy) => {
-        const steps = scale.get_value() / wheelStep;
-        const value = (dy < 0 ? Math.floor(steps) + 1 : Math.ceil(steps) - 1) * wheelStep;
-        scale.set_value(Math.min(max, Math.max(0, value)));
-        return true;
-    });
-    scale.add_controller(wheel);
-
-    const reset = flatButton({icon_name: 'edit-undo-symbolic', tooltip_text: 'Restore default'});
-    reset.connect('clicked', () => settings.reset(key));
     row.add_suffix(label);
-    row.add_suffix(scale);
-    row.add_suffix(reset);
+    row.add_suffix(buttons);
     group.add(row);
     return row;
 }

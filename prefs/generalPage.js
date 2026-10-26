@@ -6,7 +6,7 @@ import Gtk from 'gi://Gtk';
 import {backupGroup} from './backup.js';
 import {colorSetGroup} from './colorSetSelector.js';
 import {
-    alert, CappedDropDown, clock, colorSetDialog, flatButton, sliderRow, SUGGESTED, switchRow, timeButton,
+    alert, CappedDropDown, clock, colorSetDialog, flatButton, stepperRow, SUGGESTED, switchRow, timeButton,
 } from './widgets.js';
 
 // The General tab: general color sets, visual tweaks, easy access, automatic switch and backup.
@@ -69,8 +69,8 @@ function generalColorSetGroup(context, {general, light, dark}) {
 
 function tweaksGroup(context) {
     const group = new Adw.PreferencesGroup({title: 'Visual tweaks'});
-    sliderRow(context, group, 'transition-duration', {
-        title: 'Transition', subtitle: 'Fade duration when switching between light and dark mode',
+    stepperRow(context, group, 'transition-duration', {
+        title: 'Transition', subtitle: 'Fade duration when switching between light and dark mode. Default: 500 ms',
         max: 2000, step: 100, unit: ' ms',
     });
     switchRow(context, group, 'hide-borders', 'Disable borders',
