@@ -6,7 +6,7 @@ export const COLORS = {
     'Shell': {
         'panel-fg': {
             title: 'Shell text and icons',
-            subtitle: 'App grid, menus, OSD, overview, password field, search, switchers and top bar',
+            subtitle: 'App grid, app names, menus, OSD, overview, password field, search, switchers and top bar',
         },
         'general': {
             title: 'Shell background',
@@ -14,7 +14,7 @@ export const COLORS = {
         },
         'dash': {
             title: 'Overview and top bar highlights',
-            subtitle: 'Alt+Tab selection, app hover, dash buttons, folders, password field, search and top bar buttons',
+            subtitle: 'Alt+Tab selection, app hover, app names, dash buttons, folders, password field, search, top bar buttons and window close buttons',
         },
     },
     'Quick Settings': {

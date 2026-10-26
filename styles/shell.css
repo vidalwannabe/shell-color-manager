@@ -489,3 +489,21 @@
 #dash .show-apps:checked:active .overview-icon {
   background-color: {{shade}}({{shade}}({{dash}}, 8%), 9%);
 }
+
+
+/* ---- Highlights: window close buttons, window and app names ----
+ * The close button and name of each window in the overview, and the app name shown over
+ * the dash, Dash to Panel and docks: GNOME paints them dark in both modes. */
+
+.window-close,
+.window-caption,
+.dash-label {
+  background-color: {{dash}};
+  color: {{panel-fg}};
+}
+.window-close:hover {
+  background-color: {{shade}}({{dash}}, 4%);
+}
+.window-close:active {
+  background-color: {{shade}}({{dash}}, 9%);
+}
