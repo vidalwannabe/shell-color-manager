@@ -6,13 +6,16 @@ import {QuickSettingsItem, QuickSettingsMenu} from 'resource:///org/gnome/shell/
 // Added to a menu while its toggle is on (see styles/quick-settings.css).
 const ACTIVE_MENU_CLASS = 'scm-active';
 
+// Never checked, but styled as on: it only shows while apps run in the background.
+const ALWAYS_ACTIVE_CLASS = 'background-apps-quick-toggle';
+
 // The menus that Quick Settings toggles open (Wi-Fi, Bluetooth, Power...). Each one is
 // prepared as it opens, in whatever panel it is: GNOME's own, or a separate panel made by
 // another extension (Quick Settings Audio Panel builds its panels with libpanel).
 //
 // Always:
 // - Active menus: CSS cannot see from a menu whether its toggle is on, so the menu gets
-//   ACTIVE_MENU_CLASS while it is.
+//   ACTIVE_MENU_CLASS while it is. The Background Apps menu always has it.
 // - Menu heights: GNOME measures an open menu, and the room the buttons below make for it,
 //   without a width. Text that wraps ("Turn on Bluetooth to connect to devices") then counts
 //   as one line, and the menu covers the buttons below it (GNOME issue 7622). Both are
@@ -72,7 +75,7 @@ export class QuickSettingsMenus {
         const toggle = menu.sourceActor;
         if (toggle && menu.box && !this._activeToggles.has(toggle)) {
             const sync = () => {
-                if (toggle.checked)
+                if (toggle.checked || toggle.has_style_class_name(ALWAYS_ACTIVE_CLASS))
                     menu.box.add_style_class_name(ACTIVE_MENU_CLASS);
                 else
                     menu.box.remove_style_class_name(ACTIVE_MENU_CLASS);

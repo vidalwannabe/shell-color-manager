@@ -38,11 +38,13 @@
 .quick-settings .quick-toggle:checked,
 .quick-settings .quick-toggle-has-menu .quick-toggle-menu-button:checked,
 .quick-settings .quick-toggle:checked .quick-toggle-subtitle,
+.quick-settings .background-apps-quick-toggle,
 .quick-toggle-menu .header .icon.active {
   color: {{qs-active-fg}};
 }
 .quick-settings .quick-toggle:checked:insensitive,
-.quick-settings .quick-toggle-has-menu .quick-toggle-menu-button:checked:insensitive {
+.quick-settings .quick-toggle-has-menu .quick-toggle-menu-button:checked:insensitive,
+.quick-settings .background-apps-quick-toggle:insensitive {
   color: st-transparentize({{qs-active-fg}}, 0.5);
 }
 
@@ -94,66 +96,72 @@
   background-color: {{unshade}}({{qs-button}}, 3%);
 }
 
-/* ---- Active button background: toggles that are on ---- */
+/* ---- Active button background: toggles that are on, and Background Apps ---- */
 
-.quick-toggle:checked {
+.quick-toggle:checked,
+.background-apps-quick-toggle {
   background-color: {{qs-active}};
 }
-.quick-toggle:checked:hover {
+.quick-toggle:checked:hover,
+.background-apps-quick-toggle:hover {
   background-color: {{shade}}({{qs-active}}, 4%);
 }
-.quick-toggle:checked:active {
+.quick-toggle:checked:active,
+.background-apps-quick-toggle:active {
   background-color: {{shade}}({{qs-active}}, 9%);
 }
-.quick-toggle:checked:active:hover {
+.quick-toggle:checked:active:hover,
+.background-apps-quick-toggle:active:hover {
   background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
 }
-.quick-toggle:checked:focus {
+.quick-toggle:checked:focus,
+.background-apps-quick-toggle:focus {
   background-color: st-mix({{focus}}, {{qs-active}}, 5%);
 }
-.quick-toggle:checked:focus:hover {
+.quick-toggle:checked:focus:hover,
+.background-apps-quick-toggle:focus:hover {
   background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
 }
-.quick-toggle:checked:active:focus {
+.quick-toggle:checked:active:focus,
+.background-apps-quick-toggle:active:focus {
   background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
 }
-.quick-toggle:checked:insensitive {
+.quick-toggle:checked:insensitive,
+.background-apps-quick-toggle:insensitive {
   background-color: {{unshade}}({{qs-active}}, 3%);
 }
 
-/* ---- Background Apps toggle and the close buttons of its apps ---- */
+/* ---- Close buttons of the Background Apps: the color of their menu, which is always active ---- */
 
-.background-apps-quick-toggle,
 .background-app-item .icon-button {
-  background-color: {{qs-button}};
+  background-color: {{qs-active}};
 }
-.background-apps-quick-toggle:hover,
 .background-app-item .icon-button:hover {
-  background-color: {{shade}}({{qs-button}}, 4%);
+  background-color: {{shade}}({{qs-active}}, 4%);
 }
-.background-apps-quick-toggle:active,
 .background-app-item .icon-button:active {
-  background-color: {{shade}}({{qs-button}}, 9%);
+  background-color: {{shade}}({{qs-active}}, 9%);
 }
-.background-apps-quick-toggle:active:hover,
 .background-app-item .icon-button:active:hover {
-  background-color: {{shade}}({{shade}}({{qs-button}}, 9%), 4%);
+  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
 }
-.background-apps-quick-toggle:focus,
 .background-app-item .icon-button:focus {
-  background-color: st-mix({{focus}}, {{qs-button}}, 5%);
+  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
 }
-.background-apps-quick-toggle:focus:hover,
 .background-app-item .icon-button:focus:hover {
-  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 4%), 5%);
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
 }
-.background-apps-quick-toggle:active:focus,
 .background-app-item .icon-button:active:focus {
-  background-color: st-mix({{focus}}, {{shade}}({{qs-button}}, 9%), 5%);
+  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
 }
-.background-apps-quick-toggle:insensitive,
 .background-app-item .icon-button:insensitive {
-  background-color: {{unshade}}({{qs-button}}, 3%);
+  background-color: {{unshade}}({{qs-active}}, 3%);
+}
+.background-app-item .icon-button {
+  color: {{qs-active-fg}};
+}
+.background-app-item .icon-button:insensitive {
+  color: st-transparentize({{qs-active-fg}}, 0.5);
 }
 
 /* ---- Arrow buttons (›) next to toggles that are off: a shade apart from the toggle ---- */
@@ -248,8 +256,8 @@
   color: st-transparentize({{qs-fg}}, 0.5);
 }
 
-/* ---- Expanded menus of toggles that are on ----
- * The extension adds .scm-active to a menu while its toggle is on. */
+/* ---- Expanded menus of toggles that are on, and the Background Apps menu ----
+ * The extension adds .scm-active to these menus. */
 
 .quick-toggle-menu.scm-active {
   background-color: {{qs-active}};
@@ -289,7 +297,8 @@
 .quick-toggle-menu.scm-active .popup-menu-item:active:hover {
   background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
 }
-.quick-toggle-menu .header .icon.active {
+.quick-toggle-menu .header .icon.active,
+.quick-toggle-menu.scm-active .header .icon {
   background-color: {{qs-active}};
 }
 
@@ -310,7 +319,7 @@
   color: {{qs-active-fg}};
 }
 .quick-toggle-menu.scm-active .popup-menu-item:insensitive {
-  color: st-transparentize({{qs-active-fg}}, 0.5);
+  color: st-transparentize({{qs-active-fg}}, 0.3);
 }
 
 /* ---- Arrow buttons (›) next to toggles that are on ----
