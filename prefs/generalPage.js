@@ -1,4 +1,5 @@
 import Adw from 'gi://Adw';
+import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
@@ -13,7 +14,10 @@ import {
 // `colorSets` is createColorSets() of colorSets.js.
 export function generalPage(context, colorSets, uuid) {
     const page = new Adw.PreferencesPage({title: 'General', icon_name: 'preferences-desktop-appearance-symbolic'});
-    page.add(generalColorSetGroup(context, colorSets));
+    // General color sets only make sense with the color tabs: "Customize shell colors".
+    const generalColorSets = generalColorSetGroup(context, colorSets);
+    context.settings.bind('customize-shell-colors', generalColorSets, 'visible', Gio.SettingsBindFlags.GET);
+    page.add(generalColorSets);
     page.add(tweaksGroup(context));
     page.add(easyAccessGroup(context));
     page.add(autoSwitchGroup(context));
@@ -83,6 +87,8 @@ function tweaksGroup(context) {
         'Gives the calendar the card background and removes the circles behind days');
     switchRow(context, group, 'invert-osd-colors', 'Invert slider pop-up colors',
         'The volume, brightness and workspace switcher pop-ups take the active button colors');
+    switchRow(context, group, 'customize-shell-colors', 'Customize shell colors',
+        'Shows the Light mode and Dark mode tabs. Off, the shell uses Light Default and Dark Default');
     return group;
 }
 
@@ -92,8 +98,9 @@ function easyAccessGroup(context) {
     const group = new Adw.PreferencesGroup({title: 'Easy access'});
     switchRow(context, group, 'background-menu-entry', 'Desktop menu entry',
         'Adds “Shell Color Manager…” to the desktop right-click menu, below Change Background');
-    switchRow(context, group, 'quick-settings-profiles', 'Quick Settings color sets',
+    const colorSets = switchRow(context, group, 'quick-settings-profiles', 'Quick Settings color sets',
         'Adds a Quick Settings button to switch the color sets of the current mode');
+    context.settings.bind('customize-shell-colors', colorSets, 'visible', Gio.SettingsBindFlags.GET);
     return group;
 }
 

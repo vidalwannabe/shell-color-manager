@@ -70,15 +70,16 @@ class ColorSetIndicator extends SystemIndicator {
 const LIST_KEYS = ['profiles', 'profiles-dark', 'active-profile', 'active-profile-dark',
     ...COLOR_NAMES.flatMap(name => [`color-${name}`, `color-${name}-dark`])];
 
-// Adds the button while the setting is on, never on the lock screen: switching color sets
-// changes the colors of the whole session, so it is not offered to whoever is in front of
-// a locked screen.
+// Adds the button while the setting and "Customize shell colors" are on, never on the lock
+// screen: switching color sets changes the colors of the whole session, so it is not offered
+// to whoever is in front of a locked screen.
 export class QuickSettingsSwitcher {
     constructor(settings, isDark, openPreferences) {
         this._settings = settings;
         this._isDark = isDark;
         this._openPreferences = openPreferences;
-        settings.connectObject('changed::quick-settings-profiles', () => this._sync(), this);
+        for (const key of ['quick-settings-profiles', 'customize-shell-colors'])
+            settings.connectObject(`changed::${key}`, () => this._sync(), this);
         for (const key of LIST_KEYS)
             settings.connectObject(`changed::${key}`, () => this.update(), this);
         Main.sessionMode.connectObject('updated', () => this._sync(), this);
@@ -110,7 +111,8 @@ export class QuickSettingsSwitcher {
     }
 
     _sync() {
-        const show = this._settings.get_boolean('quick-settings-profiles') && !Main.sessionMode.isLocked;
+        const show = this._settings.get_boolean('quick-settings-profiles') &&
+            this._settings.get_boolean('customize-shell-colors') && !Main.sessionMode.isLocked;
         if (show && !this._indicator) {
             this._indicator = new ColorSetIndicator(this._settings, this._isDark, this._openPreferences);
             Main.panel.statusArea.quickSettings.addExternalIndicator(this._indicator);

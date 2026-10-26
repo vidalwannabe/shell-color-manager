@@ -31,10 +31,27 @@ export default class ShellColorManagerPreferences extends ExtensionPreferences {
             title: 'Dark mode', icon: 'weather-clear-night-symbolic', suffix: '-dark',
             model: colorSets.dark, sendTo: {model: colorSets.light, label: 'Light mode'},
         });
-        window.add(light.page);
-        window.add(dark.page);
+        this._showColorTabs(context, [light.page, dark.page]);
         this._addUndoShortcuts(window, new Map([[light.page, light.history], [dark.page, dark.history]]));
         autoSwitchOffNotice(context);
+    }
+
+    // The Light mode and Dark mode tabs are in the window only while "Customize shell colors"
+    // is on. They are removed, not hidden: with General alone, the window shows its title (the
+    // extension's name) in place of the tab switcher, which only counts the pages added.
+    _showColorTabs(context, pages) {
+        const sync = () => {
+            const show = context.settings.get_boolean('customize-shell-colors');
+            for (const page of pages) {
+                const added = !!page.get_parent();
+                if (show && !added)
+                    context.window.add(page);
+                else if (!show && added)
+                    context.window.remove(page);
+            }
+        };
+        sync();
+        context.watch('customize-shell-colors', sync);
     }
 
     // What the tabs share: the window, the settings, watch(key, fn) for a setting's changes,
