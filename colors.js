@@ -10,7 +10,7 @@ export const COLORS = {
         },
         'general': {
             title: 'Shell background',
-            subtitle: 'Dash, dialogs, menus, OSD, overview, top bar and window switcher',
+            subtitle: 'Dash, dialogs, menus, OSD, overview, top bar, window switcher and workspace switching',
         },
         'dash': {
             title: 'Overview and top bar highlights',
