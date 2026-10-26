@@ -42,6 +42,7 @@
     <key name="hide-borders" type="b"><default>false</default><summary>Hide the borders of menus and cards</summary></key>
     <key name="merge-arrow-buttons" type="b"><default>false</default><summary>Quick Settings arrows take their toggle's color, with no gap between them</summary></key>
     <key name="no-qs-dimming" type="b"><default>false</default><summary>Quick Settings is not darkened while one of its menus is open</summary></key>
+    <key name="invert-osd-colors" type="b"><default>false</default><summary>The volume, brightness and workspace switcher pop-ups take the active button colors</summary></key>
     <key name="calendar-background" type="b"><default>true</default><summary>The month calendar gets the cards' color, without a pill behind each day</summary></key>
     <!-- Automatic switch: apply a general profile at two times of day (minutes since midnight) -->
     <key name="auto-switch" type="b"><default>false</default><summary>Switch between light and dark mode at two set times</summary></key>

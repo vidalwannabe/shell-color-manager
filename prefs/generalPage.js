@@ -82,6 +82,8 @@ function tweaksGroup(context) {
         "Each Quick Settings arrow (›) takes its toggle's color, without the gap line between them");
     switchRow(context, group, 'calendar-background', 'Calendar as card',
         'Gives the calendar the card background and removes the circles behind days');
+    switchRow(context, group, 'invert-osd-colors', 'Invert slider pop-up colors',
+        'The volume, brightness and workspace switcher pop-ups take the active button colors');
     dashToPanelRow(context, group);
     return group;
 }

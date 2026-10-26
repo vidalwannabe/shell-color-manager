@@ -162,6 +162,31 @@
 
 
 /* ======================================================================
+ * Invert slider pop-up colors: the volume, brightness and workspace
+ * switcher pop-ups take the active button colors. Their bar and dots are
+ * drawn in the text color, the empty part a faint tint of it.
+ * ====================================================================== */
+
+.scm-invert-osd .osd-window,
+.scm-invert-osd .workspace-switcher {
+  background-color: {{qs-active}};
+  color: {{qs-active-fg}};
+}
+
+.scm-invert-osd .osd-window .level {
+  -barlevel-background-color: st-mix({{qs-active-fg}}, {{qs-active}}, 15%);
+  -barlevel-active-background-color: {{qs-active-fg}};
+}
+
+.scm-invert-osd .workspace-switcher .ws-switcher-indicator {
+  background-color: st-mix({{qs-active-fg}}, {{qs-active}}, 50%);
+}
+.scm-invert-osd .workspace-switcher .ws-switcher-indicator:active {
+  background-color: {{qs-active-fg}};
+}
+
+
+/* ======================================================================
  * Disable borders: menus and cards
  * Borders stay 1px wide but transparent, so nothing changes size.
  * Last in the file, so it also removes the outline of "Calendar as card".

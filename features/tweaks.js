@@ -6,6 +6,7 @@ const TWEAK_CLASSES = {
     'hide-borders': 'scm-hide-borders',
     'merge-arrow-buttons': 'scm-merge-arrows',
     'calendar-background': 'scm-calendar-card',
+    'invert-osd-colors': 'scm-invert-osd',
 };
 
 // The CSS tweaks of the General tab. "Disable Quick Settings dimming" is not CSS:
