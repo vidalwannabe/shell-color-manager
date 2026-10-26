@@ -117,14 +117,10 @@ export default class ShellColorManager extends Extension {
         return this._interface.get_string('color-scheme') === 'prefer-dark';
     }
 
-    // The value of each color of a mode, ready for CSS. With "Customize shell colors" off,
-    // the defaults of each mode (Light Default and Dark Default); the saved colors stay
-    // untouched, for when it is turned on again.
+    // The value of each color of a mode, ready for CSS.
     _colors(dark) {
-        const custom = this._settings.get_boolean('customize-shell-colors');
         return Object.fromEntries(COLOR_NAMES.map(name => {
-            const key = `color-${name}${dark ? '-dark' : ''}`;
-            const value = custom ? readColor(this._settings, key) : this._settings.get_default_value(key).unpack();
+            const value = readColor(this._settings, `color-${name}${dark ? '-dark' : ''}`);
             return [name, COLOR_WORDS[value]?.css ?? value];
         }));
     }
@@ -187,13 +183,10 @@ export default class ShellColorManager extends Extension {
     }
 
     // A color of the current mode changed: applied a moment later, remembering which colors
-    // changed to decide whether to fade. Turning "Customize shell colors" on or off changes
-    // the top bar, so it fades too.
+    // changed to decide whether to fade.
     _settingChanged(key) {
         const suffix = this._isDark() ? '-dark' : '';
-        if (key === 'customize-shell-colors')
-            key = 'color-general';
-        else if (!COLOR_NAMES.some(name => key === `color-${name}${suffix}`))
+        if (!COLOR_NAMES.some(name => key === `color-${name}${suffix}`))
             return;
         (this._changedKeys ??= new Set()).add(key.replace(/-dark$/, ''));
         if (this._applyId)
