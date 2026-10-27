@@ -131,31 +131,31 @@
   background-color: {{unshade}}({{qs-active}}, 3%);
 }
 
-/* ---- Close buttons of the Background Apps: the color of their menu, which is always active ---- */
+/* ---- Close buttons of the Background Apps: the hover color of their row, which is always hovered when they show ---- */
 
 .background-app-item .icon-button {
-  background-color: {{qs-active}};
-}
-.background-app-item .icon-button:hover {
   background-color: {{shade}}({{qs-active}}, 4%);
 }
+.background-app-item .icon-button:hover {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 4%);
+}
 .background-app-item .icon-button:active {
-  background-color: {{shade}}({{qs-active}}, 9%);
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 9%);
 }
 .background-app-item .icon-button:active:hover {
-  background-color: {{shade}}({{shade}}({{qs-active}}, 9%), 4%);
+  background-color: {{shade}}({{shade}}({{shade}}({{qs-active}}, 4%), 9%), 4%);
 }
 .background-app-item .icon-button:focus {
-  background-color: st-mix({{focus}}, {{qs-active}}, 5%);
-}
-.background-app-item .icon-button:focus:hover {
   background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 4%), 5%);
 }
+.background-app-item .icon-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{shade}}({{qs-active}}, 4%), 4%), 5%);
+}
 .background-app-item .icon-button:active:focus {
-  background-color: st-mix({{focus}}, {{shade}}({{qs-active}}, 9%), 5%);
+  background-color: st-mix({{focus}}, {{shade}}({{shade}}({{qs-active}}, 4%), 9%), 5%);
 }
 .background-app-item .icon-button:insensitive {
-  background-color: {{unshade}}({{qs-active}}, 3%);
+  background-color: {{unshade}}({{shade}}({{qs-active}}, 4%), 3%);
 }
 .background-app-item .icon-button {
   color: {{qs-active-fg}};
