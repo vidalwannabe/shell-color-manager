@@ -236,6 +236,32 @@
   background-color: {{qs-button}};
 }
 
+/* Submenus (Easy Effects' Output...): the color of the item that opened them, which is
+ * :checked while they are open, with the menu items' states on top. */
+.quick-toggle-menu .popup-sub-menu {
+  background-color: {{shade}}({{qs-button}}, 4%);
+}
+.quick-toggle-menu .popup-sub-menu .popup-menu-item:hover,
+.quick-toggle-menu .popup-sub-menu .popup-menu-item:selected,
+.quick-toggle-menu .popup-sub-menu .popup-menu-item:checked {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 4%), 4%);
+}
+.quick-toggle-menu .popup-sub-menu .popup-menu-item:active {
+  background-color: {{shade}}({{shade}}({{qs-button}}, 4%), 9%);
+}
+.quick-toggle-menu .popup-sub-menu .popup-menu-item:active:hover {
+  background-color: {{shade}}({{shade}}({{shade}}({{qs-button}}, 4%), 9%), 4%);
+}
+
+/* Switches that are on: the menu's text color, with a handle of the menu's color. */
+.quick-toggle-menu .toggle-switch:checked,
+.quick-toggle-menu .toggle-switch:checked:hover {
+  background-color: {{qs-fg}};
+}
+.quick-toggle-menu .toggle-switch:checked .handle {
+  background-color: {{qs-button}};
+}
+
 .quick-toggle-menu,
 .quick-toggle-menu:insensitive,
 .quick-toggle-menu .header .title,
@@ -299,6 +325,29 @@
 }
 .quick-toggle-menu .header .icon.active,
 .quick-toggle-menu.scm-active .header .icon {
+  background-color: {{qs-active}};
+}
+
+.quick-toggle-menu.scm-active .popup-sub-menu {
+  background-color: {{shade}}({{qs-active}}, 4%);
+}
+.quick-toggle-menu.scm-active .popup-sub-menu .popup-menu-item:hover,
+.quick-toggle-menu.scm-active .popup-sub-menu .popup-menu-item:selected,
+.quick-toggle-menu.scm-active .popup-sub-menu .popup-menu-item:checked {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 4%);
+}
+.quick-toggle-menu.scm-active .popup-sub-menu .popup-menu-item:active {
+  background-color: {{shade}}({{shade}}({{qs-active}}, 4%), 9%);
+}
+.quick-toggle-menu.scm-active .popup-sub-menu .popup-menu-item:active:hover {
+  background-color: {{shade}}({{shade}}({{shade}}({{qs-active}}, 4%), 9%), 4%);
+}
+
+.quick-toggle-menu.scm-active .toggle-switch:checked,
+.quick-toggle-menu.scm-active .toggle-switch:checked:hover {
+  background-color: {{qs-active-fg}};
+}
+.quick-toggle-menu.scm-active .toggle-switch:checked .handle {
   background-color: {{qs-active}};
 }
 
