@@ -6,7 +6,7 @@ export const COLORS = {
     'Shell': {
         'panel-fg': {
             title: 'Shell text and icons',
-            subtitle: 'App grid, app names, menus, OSD, overview, password field, search, switchers and top bar',
+            subtitle: 'App grid, app names, dialogs, menus, OSD, overview, password field, search, switchers and top bar',
         },
         'general': {
             title: 'Shell background',
@@ -14,7 +14,7 @@ export const COLORS = {
         },
         'dash': {
             title: 'Overview and top bar highlights',
-            subtitle: 'Alt+Tab selection, app hover, app names, dash buttons, folders, password field, search, top bar buttons and window close buttons',
+            subtitle: 'Alt+Tab selection, app hover, app names, dash buttons, dialog buttons, folders, menu items, password field, search, top bar buttons and window close buttons',
         },
     },
     'Quick Settings': {
@@ -46,7 +46,7 @@ export const COLORS = {
         },
         'fg-muted': {
             title: 'Card subtitles',
-            subtitle: 'Locations, notification body, times and weekdays',
+            subtitle: 'Days of other months, locations, No Notifications, notification body, times and weekdays',
         },
         'card-buttons': {
             title: 'Card buttons',

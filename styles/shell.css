@@ -170,6 +170,23 @@
 }
 
 
+/* ---- Shell text and icons: dialogs ----
+ * GNOME gives the dialog no color, so its title and text take the shell's white. */
+
+.modal-dialog,
+.modal-dialog .modal-dialog-button-box .modal-dialog-button,
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:hover,
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:focus,
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:active,
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:checked {
+  color: {{panel-fg}};
+}
+
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:insensitive {
+  color: st-transparentize({{panel-fg}}, 0.5);
+}
+
+
 /* ---- Highlights: search and password fields ---- */
 
 .search-entry,
@@ -293,6 +310,23 @@
 }
 
 
+/* ---- Highlights: menu items ----
+ * Menus of the top bar, the desktop and apps. Quick Settings menus have their own in
+ * quick-settings.css. */
+
+.popup-menu-item:hover,
+.popup-menu-item:selected,
+.popup-menu-item:checked {
+  background-color: {{dash}};
+}
+.popup-menu-item:active {
+  background-color: {{shade}}({{dash}}, 5%);
+}
+.popup-menu-item:active:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 5%), 4%);
+}
+
+
 /* ---- Highlights: app folders, search results and the folder edit button ---- */
 
 .app-folder,
@@ -362,6 +396,43 @@
 .search-section-content,
 .app-folder-dialog {
   background-color: {{dash}};
+}
+
+
+/* ---- Highlights: dialog buttons ---- */
+
+.modal-dialog .modal-dialog-button-box .modal-dialog-button {
+  background-color: {{dash}};
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:hover {
+  background-color: {{shade}}({{dash}}, 4%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:active {
+  background-color: {{shade}}({{dash}}, 9%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:active:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 9%), 4%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:focus {
+  background-color: st-mix({{focus}}, {{dash}}, 5%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:focus:hover {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 4%), 5%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:active:focus {
+  background-color: st-mix({{focus}}, {{shade}}({{dash}}, 9%), 5%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:checked {
+  background-color: {{shade}}({{dash}}, 8%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:checked:hover {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 4%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:checked:active {
+  background-color: {{shade}}({{shade}}({{dash}}, 8%), 9%);
+}
+.modal-dialog .modal-dialog-button-box .modal-dialog-button:insensitive {
+  background-color: {{unshade}}({{dash}}, 3%);
 }
 
 

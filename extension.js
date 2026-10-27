@@ -45,6 +45,13 @@ const STYLE_VALUES = {
     },
 };
 
+// GNOME's accent colors (Settings › Appearance), for the pictures, which cannot use
+// -st-accent-color.
+const ACCENT_COLORS = {
+    blue: '#3584e4', teal: '#2190a4', green: '#3a944a', yellow: '#c88800', orange: '#ed5b00',
+    red: '#e62d42', pink: '#d56199', purple: '#9141ac', slate: '#6f8396',
+};
+
 // A color change fades like a mode switch when it shows on screen: the top bar always, the
 // overview and the menus only while open.
 const TOP_BAR_KEYS = ['color-general', 'color-panel-fg'];
@@ -75,7 +82,10 @@ export default class ShellColorManager extends Extension {
         this._useLightShell();
         syncGtk3Theme(this._interface);
         this._settings.connectObject('changed', (_settings, key) => this._settingChanged(key), this);
-        this._interface.connectObject('changed::color-scheme', () => this._modeChanged(), this);
+        this._interface.connectObject(
+            'changed::color-scheme', () => this._modeChanged(),
+            'changed::accent-color', () => this._applyColors(),
+            this);
         this._applyColors();
 
         // The features of the General tab, each in its own file. Each has destroy(), and may
@@ -105,6 +115,7 @@ export default class ShellColorManager extends Extension {
         this._interface.disconnectObject(this);
 
         this._unloadStylesheet();
+        this._clearCache();
         if (this._interface.get_string('color-scheme') === 'prefer-light')
             this._interface.set_string('color-scheme', 'default');
         syncGtk3Theme(this._interface);
@@ -125,10 +136,38 @@ export default class ShellColorManager extends Extension {
         }));
     }
 
+    // A color of a mode as a plain color code, for the pictures: the words become the colors
+    // they stand for.
+    _plainColor(name, dark) {
+        const value = readColor(this._settings, `color-${name}${dark ? '-dark' : ''}`);
+        if (value === 'accent')
+            return ACCENT_COLORS[this._interface.get_string('accent-color')] ?? ACCENT_COLORS.blue;
+        if (value === 'accent-fg')
+            return '#ffffff';
+        return value;
+    }
+
+    // The dot under days with events, drawn in `color`: GNOME's is a picture in a fixed white
+    // or black. Each color gets its own file, as St keeps the pictures it loaded by name.
+    _eventDot(color) {
+        const id = GLib.compute_checksum_for_string(GLib.ChecksumType.MD5, color, -1);
+        const path = GLib.build_filenamev([this._cacheDir, `event-dot-${id}.svg`]);
+        if (!GLib.file_test(path, GLib.FileTest.EXISTS)) {
+            GLib.file_set_contents(path,
+                `<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg"><circle fill="${color}" cx="16" cy="28" r="2"/></svg>`);
+        }
+        return `url("${Gio.File.new_for_path(path).get_uri()}")`;
+    }
+
     // The stylesheets with every {{marker}} replaced by its value.
     _buildCss() {
         const dark = this._isDark();
-        const values = {...STYLE_VALUES[dark ? 'dark' : 'light'], ...this._colors(dark)};
+        const values = {
+            ...STYLE_VALUES[dark ? 'dark' : 'light'],
+            ...this._colors(dark),
+            'event-dot': this._eventDot(this._plainColor('fg', dark)),
+            'today-event-dot': this._eventDot(this._plainColor('qs-active-fg', dark)),
+        };
         return this._template.replace(/{{([a-z-]+)}}/g, (marker, name) => values[name] ?? marker);
     }
 
@@ -242,6 +281,7 @@ export default class ShellColorManager extends Extension {
         this._unloadStylesheet();
         this._loadedFile = file;
         this._loadedCss = css;
+        this._clearCache(`${file.get_basename()} ${css}`);
     }
 
     _unloadStylesheet() {
@@ -252,14 +292,16 @@ export default class ShellColorManager extends Extension {
         this._loadedFile = this._loadedCss = null;
     }
 
-    // Removes stylesheets left behind by a session that ended without disable().
-    _clearCache() {
+    // Removes the stylesheets and dots no longer in use, except the files named in `keep`:
+    // all of them on enable(), as a session can end without disable().
+    _clearCache(keep = '') {
         GLib.mkdir_with_parents(this._cacheDir, 0o755);
         const folder = Gio.File.new_for_path(this._cacheDir);
         const files = folder.enumerate_children('standard::name', Gio.FileQueryInfoFlags.NONE, null);
         for (let info; (info = files.next_file(null));) {
-            if (info.get_name().endsWith('.css'))
-                folder.get_child(info.get_name()).delete(null);
+            const name = info.get_name();
+            if (/\.(css|svg)$/.test(name) && !keep.includes(name))
+                folder.get_child(name).delete(null);
         }
         files.close(null);
     }

@@ -19,6 +19,9 @@ GNOME Shell:
   - `{{unshade}}`: the opposite of `{{shade}}`, for disabled buttons
   - `{{focus}}`: the tint of a focused button
   - the others are listed at the top of the file that uses them
+- **Pictures**: `{{event-dot}}` and `{{today-event-dot}}`, the dot under calendar days with
+  events. GNOME's is an SVG in a fixed color, so extension.js writes one in the color of
+  `{{fg}}` and of `{{qs-active-fg}}` and gives its `url()`.
 
 ## Button states
 

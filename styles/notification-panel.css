@@ -3,6 +3,8 @@
  * and the media player.
  * Colors: {{fg}} {{fg-muted}} {{card-buttons}} {{card}}, and {{qs-active}}
  * {{qs-active-fg}} for today in the calendar and the media player.
+ * Also: {{event-dot}} {{today-event-dot}}, the dot under days with events drawn in {{fg}}
+ * and in {{qs-active-fg}} (see README.md in this folder).
  * Also: {{stack-second}} {{stack-lower}}, how much darker stacked notifications are.
  * Markers and button states: see README.md in this folder.
  */
@@ -21,6 +23,7 @@
 .calendar .calendar-day,
 .calendar .calendar-day.calendar-weekend,
 .calendar .calendar-month-header .calendar-month-label,
+.calendar .calendar-month-header .pager-button,
 .message .message-header .message-close-button,
 .message .message-header .message-expand-button,
 .message-notification-group .message-collapse-button,
@@ -40,10 +43,12 @@
   color: {{fg}};
 }
 
-/* Days of other months, dimmed. */
-.calendar .calendar-day.calendar-other-month,
-.calendar .calendar-day.calendar-other-month.calendar-weekend {
-  color: st-transparentize({{fg}}, 0.5);
+/* The dot under days with events. GNOME's for today is !important. */
+.calendar .calendar-day.calendar-day-with-events {
+  background-image: {{event-dot}};
+}
+.calendar .calendar-day.calendar-today.calendar-day-with-events {
+  background-image: {{today-event-dot}} !important;
 }
 
 
@@ -57,7 +62,11 @@
 .weather-button .weather-box .weather-header-box .weather-header.location,
 .weather-button .weather-box .weather-grid .weather-forecast-time,
 .datemenu-today-button .day-label,
-.calendar .calendar-week-number {
+.calendar .calendar-week-number,
+.calendar .calendar-day-heading,
+.calendar .calendar-day.calendar-other-month,
+.calendar .calendar-day.calendar-other-month.calendar-weekend,
+.message-list .message-list-placeholder {
   color: {{fg-muted}};
 }
 
