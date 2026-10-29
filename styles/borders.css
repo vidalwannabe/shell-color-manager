@@ -84,6 +84,62 @@
   border-color: transparent;
 }
 
+/* St mixes a border over the button's own background, and the highlight is a shadow over
+ * a transparent one, so the line would mix over the top bar and almost vanish. The
+ * highlight becomes the background instead, under the line too. Not on the lock and
+ * login screens, which keep GNOME's see-through highlights (shell.css). */
+.scm-add-borders #panel .panel-button:hover,
+.scm-add-borders #panel .panel-button:focus,
+.scm-add-borders #panel .panel-button:active,
+.scm-add-borders #panel .panel-button:checked,
+.scm-add-borders #panel .panel-button.clock-display:hover .clock,
+.scm-add-borders #panel .panel-button.clock-display:focus .clock,
+.scm-add-borders #panel .panel-button.clock-display:active .clock,
+.scm-add-borders #panel .panel-button.clock-display:checked .clock {
+  background-color: {{dash}};
+  box-shadow: none;
+}
+.scm-add-borders #panel .panel-button.clock-display:hover,
+.scm-add-borders #panel .panel-button.clock-display:focus,
+.scm-add-borders #panel .panel-button.clock-display:active,
+.scm-add-borders #panel .panel-button.clock-display:checked,
+.scm-add-borders #panel.unlock-screen .panel-button,
+.scm-add-borders #panel.login-screen .panel-button,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display .clock {
+  background-color: transparent;
+}
+.scm-add-borders #panel.unlock-screen .panel-button:hover,
+.scm-add-borders #panel.unlock-screen .panel-button:focus,
+.scm-add-borders #panel.login-screen .panel-button:hover,
+.scm-add-borders #panel.login-screen .panel-button:focus,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:hover .clock,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:focus .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:hover .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:focus .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.17);
+}
+.scm-add-borders #panel.unlock-screen .panel-button:active,
+.scm-add-borders #panel.unlock-screen .panel-button:checked,
+.scm-add-borders #panel.login-screen .panel-button:active,
+.scm-add-borders #panel.login-screen .panel-button:checked,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:active .clock,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:checked .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:active .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:checked .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.28);
+}
+.scm-add-borders #panel.unlock-screen .panel-button:active:hover,
+.scm-add-borders #panel.unlock-screen .panel-button:checked:hover,
+.scm-add-borders #panel.login-screen .panel-button:active:hover,
+.scm-add-borders #panel.login-screen .panel-button:checked:hover,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:active:hover .clock,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display:checked:hover .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:active:hover .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display:checked:hover .clock {
+  box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.32);
+}
+
 /* ---- Cards: notifications, calendar as card, Events, World Clocks, Weather and Clear ----
  * Today has none. */
 
@@ -114,6 +170,19 @@
 .scm-add-borders .quick-toggle-has-menu:checked,
 .scm-add-borders .background-apps-quick-toggle {
   border-color: transparent;
+}
+
+/* St mixes a border over the widget's own background. The whole of a toggle with an arrow
+ * has none, so its faint line would mix over the menu and almost vanish: it takes the
+ * toggles' color, under its two halves, and the gap between them keeps the menu's. */
+.scm-add-borders .quick-toggle-has-menu {
+  background-color: {{qs-button}};
+}
+.scm-add-borders .quick-toggle-has-menu:checked {
+  background-color: transparent;
+}
+.scm-add-borders .quick-toggle-has-menu .quick-toggle-separator {
+  background-color: {{general}};
 }
 
 .scm-add-borders .quick-toggle-menu {
