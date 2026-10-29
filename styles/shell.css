@@ -327,46 +327,54 @@
 }
 
 
-/* ---- Highlights: app folders, search results and the folder edit button ---- */
+/* ---- Highlights: app folders, search results, the folder edit button and page arrows ---- */
 
 .app-folder,
 .list-search-result,
-.app-folder-dialog .folder-name-container .icon-button {
+.app-folder-dialog .folder-name-container .icon-button,
+.page-navigation-arrow {
   background-color: {{dash}};
 }
 .app-folder:hover,
 .list-search-result:hover,
-.app-folder-dialog .folder-name-container .icon-button:hover {
+.app-folder-dialog .folder-name-container .icon-button:hover,
+.page-navigation-arrow:hover {
   background-color: {{shade}}({{dash}}, 4%);
 }
 .app-folder:active,
 .list-search-result:active,
-.app-folder-dialog .folder-name-container .icon-button:active {
+.app-folder-dialog .folder-name-container .icon-button:active,
+.page-navigation-arrow:active {
   background-color: {{shade}}({{dash}}, 9%);
 }
 .app-folder:active:hover,
 .list-search-result:active:hover,
-.app-folder-dialog .folder-name-container .icon-button:active:hover {
+.app-folder-dialog .folder-name-container .icon-button:active:hover,
+.page-navigation-arrow:active:hover {
   background-color: {{shade}}({{shade}}({{dash}}, 9%), 4%);
 }
 .app-folder:focus,
 .list-search-result:focus,
-.app-folder-dialog .folder-name-container .icon-button:focus {
+.app-folder-dialog .folder-name-container .icon-button:focus,
+.page-navigation-arrow:focus {
   background-color: st-mix({{focus}}, {{dash}}, 5%);
 }
 .app-folder:focus:hover,
 .list-search-result:focus:hover,
-.app-folder-dialog .folder-name-container .icon-button:focus:hover {
+.app-folder-dialog .folder-name-container .icon-button:focus:hover,
+.page-navigation-arrow:focus:hover {
   background-color: st-mix({{focus}}, {{shade}}({{dash}}, 4%), 5%);
 }
 .app-folder:active:focus,
 .list-search-result:active:focus,
-.app-folder-dialog .folder-name-container .icon-button:active:focus {
+.app-folder-dialog .folder-name-container .icon-button:active:focus,
+.page-navigation-arrow:active:focus {
   background-color: st-mix({{focus}}, {{shade}}({{dash}}, 9%), 5%);
 }
 .app-folder:insensitive,
 .list-search-result:insensitive,
-.app-folder-dialog .folder-name-container .icon-button:insensitive {
+.app-folder-dialog .folder-name-container .icon-button:insensitive,
+.page-navigation-arrow:insensitive {
   background-color: {{unshade}}({{dash}}, 3%);
 }
 

@@ -200,8 +200,8 @@
 }
 
 /* ---- Buttons and highlights: an inset line ----
- * Always: dock icons, folders, search, list results, dialog buttons, notification buttons,
- * today in the calendar. On hover or selection: app grid icons, searched apps, grid results,
+ * Always: dock icons, folders, search, list results, page arrows, dialog buttons,
+ * notification buttons, today in the calendar. On hover or selection: app grid icons, searched apps, grid results,
  * menu items (right-click menus too), Alt+Tab, calendar days and arrows. */
 
 .scm-add-borders #dash .dash-item-container .show-apps .overview-icon,
@@ -210,6 +210,7 @@
 .scm-add-borders .search-entry,
 .scm-add-borders .list-search-result,
 .scm-add-borders .app-folder-dialog .folder-name-container .icon-button,
+.scm-add-borders .page-navigation-arrow,
 .scm-add-borders .modal-dialog .modal-dialog-button-box .modal-dialog-button,
 .scm-add-borders .notification-button,
 .scm-add-borders .message .message-header .message-close-button,
