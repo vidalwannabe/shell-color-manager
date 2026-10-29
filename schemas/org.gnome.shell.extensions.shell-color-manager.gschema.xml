@@ -14,6 +14,7 @@
     <key name="color-qs-active" type="s"><default>'accent'</default><summary>Active button background: toggles that are on and the menus they open (accent: the accent color set in GNOME Settings)</summary></key>
     <key name="color-highlight" type="s"><default>'accent'</default><summary>Volume and brightness sliders (accent: the accent color set in GNOME Settings)</summary></key>
     <key name="color-qs-button" type="s"><default>'#e6e6e7'</default><summary>Idle button background</summary></key>
+    <key name="color-borders" type="s"><default>'#e6e6e7'</default><summary>Borders</summary></key>
     <!-- Dark mode -->
     <key name="color-general-dark" type="s"><default>'#222226'</default><summary>Shell background</summary></key>
     <key name="color-fg-dark" type="s"><default>'#ffffff'</default><summary>Card titles and icons</summary></key>
@@ -27,6 +28,7 @@
     <key name="color-qs-active-dark" type="s"><default>'accent'</default><summary>Active button background: toggles that are on and the menus they open (accent: the accent color set in GNOME Settings)</summary></key>
     <key name="color-highlight-dark" type="s"><default>'accent'</default><summary>Volume and brightness sliders (accent: the accent color set in GNOME Settings)</summary></key>
     <key name="color-qs-button-dark" type="s"><default>'#343437'</default><summary>Idle button background</summary></key>
+    <key name="color-borders-dark" type="s"><default>'#343437'</default><summary>Borders</summary></key>
     <!-- Saved color profiles: JSON list of {"name": ..., "colors": {row: color}} -->
     <key name="profiles" type="s"><default>'[]'</default><summary>Light mode color sets</summary></key>
     <key name="profiles-dark" type="s"><default>'[]'</default><summary>Dark mode color sets</summary></key>
@@ -37,7 +39,10 @@
     <key name="active-general-profile" type="s"><default>'Default'</default><summary>Last applied general color set</summary></key>
     <!-- General tab -->
     <key name="transition-duration" type="i"><range min="0" max="2000"/><default>500</default><summary>Fade duration in ms when switching between light and dark mode</summary></key>
-    <key name="hide-borders" type="b"><default>false</default><summary>Hide the borders of menus and cards</summary></key>
+    <key name="customize-borders" type="b"><default>false</default><summary>Apply the three border options below</summary></key>
+    <key name="add-borders" type="b"><default>false</default><summary>Add a 1px border to the dock and its icons, the top bar, menus and their hovered items, dialogs, switchers, pop-ups, cards, folders, search, notification buttons and Quick Settings</summary></key>
+    <key name="border-colors" type="b"><default>false</default><summary>Paint every border with the Borders color of each mode</summary></key>
+    <key name="hide-borders" type="b"><default>false</default><summary>Hide the borders of menus and cards; the two options above are then off</summary></key>
     <key name="merge-arrow-buttons" type="b"><default>false</default><summary>Quick Settings arrows take their toggle's color, with no gap between them</summary></key>
     <key name="no-qs-dimming" type="b"><default>false</default><summary>Quick Settings is not darkened while one of its menus is open</summary></key>
     <key name="invert-osd-colors" type="b"><default>false</default><summary>The volume, brightness and workspace switcher pop-ups take the active button colors</summary></key>

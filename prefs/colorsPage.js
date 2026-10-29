@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk';
 
-import {COLOR_WORDS, COLORS, readColor} from '../colors.js';
+import {COLOR_WORDS, COLORS, readColor, settingsSay} from '../colors.js';
 import {colorSetGroup} from './colorSetSelector.js';
 import {colorSetDialog, flatButton} from './widgets.js';
 
@@ -28,7 +28,10 @@ export function colorsPage(context, {title, icon, suffix, model, sendTo}) {
         const group = new Adw.PreferencesGroup({title: blockTitle});
         for (const [name, color] of Object.entries(colors)) {
             keys.push(`color-${name}${suffix}`);
-            group.add(colorRow(context, `color-${name}${suffix}`, color, () => model.restore(name)));
+            const row = colorRow(context, `color-${name}${suffix}`, color, () => model.restore(name));
+            if (color.shownWhen)
+                showWhen(context, row, color.shownWhen);
+            group.add(row);
         }
         page.add(group);
     }
@@ -138,6 +141,14 @@ function colorRow(context, key, {title, subtitle}, restore) {
     row.add_suffix(button);
     row.add_suffix(reset);
     return row;
+}
+
+// Shows `row` only while the true/false settings of `when` say so (see settingsSay()).
+function showWhen(context, row, when) {
+    const show = () => row.set_visible(settingsSay(context.settings, when));
+    show();
+    for (const key of [...when.on ?? [], ...when.off ?? []])
+        context.watch(key, show);
 }
 
 // ---------- Undo ----------

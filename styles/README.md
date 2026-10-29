@@ -1,6 +1,6 @@
 # Stylesheets
 
-Where each color paints. extension.js reads these four files in this order, joins them,
+Where each color paints. extension.js reads these five files in this order, joins them,
 leaves out their comments and fills every `{{marker}}` before loading the result into
 GNOME Shell:
 
@@ -8,6 +8,7 @@ GNOME Shell:
 2. `quick-settings.css`: toggles, round buttons, sliders and the menus they open
 3. `notification-panel.css`: notifications, calendar, Today, World Clocks, Weather and the media player
 4. `tweaks.css`: the options of the General tab, each under its own class
+5. `borders.css`: Customize borders, of the General tab
 
 ## Markers
 

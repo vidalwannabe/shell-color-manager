@@ -6,18 +6,22 @@ import St from 'gi://St';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-import {COLOR_NAMES, COLOR_WORDS, readColor} from './colors.js';
+import {COLOR_NAMES, COLOR_WORDS, readColor, settingsSay} from './colors.js';
 import {AutoSwitch} from './features/autoSwitch.js';
 import {DashToPanel} from './features/dashToPanel.js';
 import {DesktopMenu} from './features/desktopMenu.js';
 import {syncGtk3Theme} from './features/gtk3Theme.js';
 import {QuickSettingsSwitcher} from './features/quickSettings.js';
 import {QuickSettingsMenus} from './features/quickSettingsMenus.js';
-import {Tweaks} from './features/tweaks.js';
+import {BORDER_CLASSES, Tweaks} from './features/tweaks.js';
 
 // The stylesheets of the three blocks of colors.js, in the order they are loaded, then the
-// tweaks of the General tab.
-const STYLESHEETS = ['shell.css', 'quick-settings.css', 'notification-panel.css', 'tweaks.css'];
+// tweaks of the General tab and its border options.
+const STYLESHEETS = ['shell.css', 'quick-settings.css', 'notification-panel.css', 'tweaks.css', 'borders.css'];
+
+// The settings that pick the color of {{border}} in borders.css.
+const BORDER_COLOR_WHEN = BORDER_CLASSES['scm-border-colors'];
+const BORDER_COLOR_KEYS = [...BORDER_COLOR_WHEN.on, ...BORDER_COLOR_WHEN.off];
 
 // Values of the stylesheets' markers that change with GNOME's style, light or dark.
 const STYLE_VALUES = {
@@ -31,6 +35,7 @@ const STYLE_VALUES = {
         'arrow-on-mix': '#222226, 92%',
         'calendar-border': 'rgba(0, 0, 0, 0.09)',
         'calendar-shadow': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'added-border': 'rgba(0, 0, 0, 0.1)',
     },
     dark: {
         'shade': 'st-lighten',
@@ -42,6 +47,7 @@ const STYLE_VALUES = {
         'arrow-on-mix': '#ffffff, 85%',
         'calendar-border': 'transparent',
         'calendar-shadow': 'none',
+        'added-border': 'rgba(255, 255, 255, 0.1)',
     },
 };
 
@@ -162,9 +168,12 @@ export default class ShellColorManager extends Extension {
     // The stylesheets with every {{marker}} replaced by its value.
     _buildCss() {
         const dark = this._isDark();
+        const style = STYLE_VALUES[dark ? 'dark' : 'light'];
+        const colors = this._colors(dark);
         const values = {
-            ...STYLE_VALUES[dark ? 'dark' : 'light'],
-            ...this._colors(dark),
+            ...style,
+            ...colors,
+            'border': settingsSay(this._settings, BORDER_COLOR_WHEN) ? colors['borders'] : style['added-border'],
             'event-dot': this._eventDot(this._plainColor('fg', dark)),
             'today-event-dot': this._eventDot(this._plainColor('qs-active-fg', dark)),
         };
@@ -224,6 +233,10 @@ export default class ShellColorManager extends Extension {
     // A color of the current mode changed: applied a moment later, remembering which colors
     // changed to decide whether to fade.
     _settingChanged(key) {
+        if (BORDER_COLOR_KEYS.includes(key)) {
+            this._applyColors();
+            return;
+        }
         const suffix = this._isDark() ? '-dark' : '';
         if (!COLOR_NAMES.some(name => key === `color-${name}${suffix}`))
             return;

@@ -106,10 +106,22 @@ export function colorSetDialog(context, taken, onConfirm,
 
 // ---------- Rows ----------
 
-// A switch row bound to a true/false setting.
+// A switch row bound to a true/false setting, in a group or under an expander row.
 export function switchRow(context, group, key, title, subtitle) {
     const row = new Adw.SwitchRow({title, subtitle});
     context.settings.bind(key, row, 'active', Gio.SettingsBindFlags.DEFAULT);
+    if (group instanceof Adw.ExpanderRow)
+        group.add_row(row);
+    else
+        group.add(row);
+    return row;
+}
+
+// An expander row whose switch is bound to a true/false setting: its rows open, and apply,
+// only while it is on.
+export function expanderSwitchRow(context, group, key, title, subtitle) {
+    const row = new Adw.ExpanderRow({title, subtitle, show_enable_switch: true});
+    context.settings.bind(key, row, 'enable-expansion', Gio.SettingsBindFlags.DEFAULT);
     group.add(row);
     return row;
 }

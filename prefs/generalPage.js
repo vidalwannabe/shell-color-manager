@@ -6,7 +6,8 @@ import Gtk from 'gi://Gtk';
 import {backupGroup} from './backup.js';
 import {colorSetGroup} from './colorSetSelector.js';
 import {
-    alert, CappedDropDown, clock, colorSetDialog, flatButton, stepperRow, SUGGESTED, switchRow, timeButton,
+    alert, CappedDropDown, clock, colorSetDialog, expanderSwitchRow, flatButton, stepperRow, SUGGESTED, switchRow,
+    timeButton,
 } from './widgets.js';
 
 // The General tab: general color sets, visual tweaks, easy access, automatic switch and backup.
@@ -73,8 +74,7 @@ function tweaksGroup(context) {
         title: 'Transition', subtitle: 'Fade duration when switching between light and dark mode. Default: 500 ms',
         max: 2000, step: 100, unit: ' ms',
     });
-    switchRow(context, group, 'hide-borders', 'Disable borders',
-        'Removes the borders of menus and cards');
+    bordersRow(context, group);
     switchRow(context, group, 'no-qs-dimming', 'Disable Quick Settings dimming',
         'Keeps Quick Settings bright while a toggle menu is open');
     switchRow(context, group, 'merge-arrow-buttons', 'Merge arrows into toggles',
@@ -84,6 +84,24 @@ function tweaksGroup(context) {
     switchRow(context, group, 'invert-osd-colors', 'Invert slider pop-up colors',
         'The volume, brightness and workspace switcher pop-ups take the active button colors');
     return group;
+}
+
+// Customize borders: its options only apply while it is on, and Disable borders turns the
+// others off. The Borders color shows in the Light and Dark mode tabs while Change
+// border colors applies.
+function bordersRow(context, group) {
+    const expander = expanderSwitchRow(context, group, 'customize-borders', 'Customize borders',
+        'Adds, recolors or removes the borders of the shell');
+    const others = [
+        switchRow(context, expander, 'add-borders', 'Everything with border',
+            'Adds a 1px border to the dock and its icons, the top bar, menus and their hovered items, dialogs, pop-ups, cards, folders, search, notification buttons and Quick Settings'),
+        switchRow(context, expander, 'border-colors', 'Change border colors',
+            'Adds a Borders color to the Light mode and Dark mode tabs, below Overview and top bar highlights'),
+    ];
+    const hide = switchRow(context, expander, 'hide-borders', 'Disable borders',
+        'Removes the borders of menus and cards');
+    for (const row of others)
+        hide.bind_property('active', row, 'sensitive', GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN);
 }
 
 // ---------- Easy access ----------

@@ -6,7 +6,7 @@
  * The class also makes these rules win over the three other stylesheets.
  *
  * Markers and button states: see README.md in this folder. Also:
- *   {{calendar-border}}  the cards' outline: a faint line in light mode, none in dark
+ *   {{calendar-border}}  the cards' and Clear button's outline: a faint line in light mode, none in dark
  *   {{calendar-shadow}}  the cards' shadow: faint in light mode, none in dark
  */
 
@@ -183,27 +183,4 @@
 }
 .scm-invert-osd .workspace-switcher .ws-switcher-indicator:active {
   background-color: {{qs-active-fg}};
-}
-
-
-/* ======================================================================
- * Disable borders: menus and cards
- * Borders stay 1px wide but transparent, so nothing changes size.
- * Last in the file, so it also removes the outline of "Calendar as card".
- * ====================================================================== */
-
-.scm-hide-borders .popup-menu-content,
-.scm-hide-borders .candidate-popup-content {
-  border-color: transparent;
-}
-
-/* The cards GNOME outlines in light style, and the calendar as card. */
-.scm-hide-borders .message,
-.scm-hide-borders .events-button,
-.scm-hide-borders .world-clocks-button,
-.scm-hide-borders .weather-button,
-.scm-hide-borders .datemenu-today-button,
-.scm-hide-borders .calendar {
-  border-color: transparent !important;
-  box-shadow: none;
 }

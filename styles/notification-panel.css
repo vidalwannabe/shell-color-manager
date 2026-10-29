@@ -6,6 +6,7 @@
  * Also: {{event-dot}} {{today-event-dot}}, the dot under days with events drawn in {{fg}}
  * and in {{qs-active-fg}} (see README.md in this folder).
  * Also: {{stack-second}} {{stack-lower}}, how much darker stacked notifications are.
+ * Also: {{calendar-border}}, the Clear button's border, the cards' outline (see tweaks.css).
  * Markers and button states: see README.md in this folder.
  */
 
@@ -196,6 +197,12 @@
 }
 .message:lower-in-stack {
   background-color: st-darken({{card}}, {{stack-lower}});
+}
+
+/* The Clear button's border, which GNOME does not draw: the cards' own, so it matches
+ * them. Customize borders removes or recolors it like the cards'. */
+.message-list-controls .button {
+  border: 1px solid {{calendar-border}};
 }
 
 

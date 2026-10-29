@@ -1,0 +1,224 @@
+/*
+ * BORDERS: "Customize borders" of the General tab.
+ *
+ * features/tweaks.js adds each class to the shell's main container while Customize borders
+ * is on:
+ *   .scm-add-borders    Everything with border, while Disable borders is off
+ *   .scm-border-colors  Change border colors, while Disable borders is off
+ *   .scm-hide-borders   Disable borders
+ * Loaded last, so it also restyles the outline of "Calendar as card" (tweaks.css).
+ *
+ * Markers and button states: see README.md in this folder. Also:
+ *   {{border}}  every border of this file: the Borders color with Change border colors,
+ *               otherwise a faint line, darker than what it outlines in light mode and
+ *               lighter in dark mode (extension.js)
+ *
+ * Panels, menus and cards get a real 1px border. Buttons and highlights get an inset 1px
+ * shadow instead, so nothing changes size when it shows on hover; GNOME's focus rings
+ * (!important) still win over it.
+ */
+
+
+/* ======================================================================
+ * Everything with border
+ * ====================================================================== */
+
+/* ---- Panels: dock, menus, dialogs, switchers, OSD, folders and search results ----
+ * GNOME already gives most a 1px border, faint or transparent; the dock and dialogs are
+ * 2px bigger. */
+
+.scm-add-borders #dash .dash-background,
+.scm-add-borders .popup-menu-content,
+.scm-add-borders .candidate-popup-content,
+.scm-add-borders .modal-dialog,
+.scm-add-borders .switcher-list,
+.scm-add-borders .osd-window,
+.scm-add-borders .workspace-switcher,
+.scm-add-borders .resize-popup,
+.scm-add-borders .app-folder-dialog,
+.scm-add-borders .search-section-content {
+  border: 1px solid {{border}};
+}
+
+/* ---- Top bar: a 1px line under it ----
+ * GNOME never paints the top bar's border, so the line is a shadow just below it.
+ * Not on the lock and login screens, where the top bar is see-through. */
+
+.scm-add-borders #panel {
+  box-shadow: 0 1px 0 0 {{border}};
+}
+.scm-add-borders #panel.unlock-screen,
+.scm-add-borders #panel.login-screen {
+  box-shadow: none;
+}
+
+/* ---- Top bar buttons: 1px around their highlight ----
+ * GNOME fills them with an inset shadow inside a 3px transparent border, so the border
+ * cannot be a second shadow. It becomes 1px, with 2px of margin around it: the buttons
+ * and their highlight keep their size, and the line sits right around the highlight.
+ * The clock draws its highlight on its inner .clock (its own border is none !important). */
+
+.scm-add-borders #panel .panel-button,
+.scm-add-borders #panel .panel-button.clock-display .clock {
+  border: 1px solid transparent;
+  margin: 2px;
+}
+.scm-add-borders #panel .panel-button.clock-display {
+  border-width: 0;
+  margin: 0;
+}
+.scm-add-borders #panel .panel-button:hover,
+.scm-add-borders #panel .panel-button:focus,
+.scm-add-borders #panel .panel-button:active,
+.scm-add-borders #panel .panel-button:checked,
+.scm-add-borders #panel .panel-button.clock-display:hover .clock,
+.scm-add-borders #panel .panel-button.clock-display:focus .clock,
+.scm-add-borders #panel .panel-button.clock-display:active .clock,
+.scm-add-borders #panel .panel-button.clock-display:checked .clock {
+  border-color: {{border}};
+}
+.scm-add-borders #panel.unlock-screen .panel-button,
+.scm-add-borders #panel.login-screen .panel-button,
+.scm-add-borders #panel.unlock-screen .panel-button.clock-display .clock,
+.scm-add-borders #panel.login-screen .panel-button.clock-display .clock {
+  border-color: transparent;
+}
+
+/* ---- Cards: notifications, calendar as card, Events, World Clocks, Weather and Clear ----
+ * Today has none. */
+
+.scm-add-borders .message,
+.scm-add-borders .events-button,
+.scm-add-borders .world-clocks-button,
+.scm-add-borders .weather-button,
+.scm-add-borders.scm-calendar-card .calendar,
+.scm-add-borders .message-list-controls .button {
+  border-color: {{border}} !important;
+}
+
+/* ---- Quick Settings: everything but what is active ----
+ * The round buttons and toggles are 2px bigger. Toggles that are on keep a transparent
+ * border, so they stay the same size as the others; a toggle with an arrow (›) is
+ * outlined as a whole. The menus already have a transparent 1px border. */
+
+.scm-add-borders .quick-toggle,
+.scm-add-borders .quick-toggle-has-menu,
+.scm-add-borders .quick-settings-system-item .icon-button,
+.scm-add-borders .quick-slider .icon-button {
+  border: 1px solid {{border}};
+}
+.scm-add-borders .quick-toggle-has-menu .quick-toggle {
+  border-width: 0;
+}
+.scm-add-borders .quick-toggle:checked,
+.scm-add-borders .quick-toggle-has-menu:checked,
+.scm-add-borders .background-apps-quick-toggle {
+  border-color: transparent;
+}
+
+.scm-add-borders .quick-toggle-menu {
+  border-color: {{border}};
+}
+.scm-add-borders .quick-toggle-menu.scm-active {
+  border-color: transparent;
+}
+
+/* The empty part of the sliders and of the volume and brightness pop-ups: GNOME draws them
+ * in code, so features/tweaks.js draws this border, in this color. */
+.scm-add-borders .quick-slider .slider,
+.scm-add-borders .osd-window .level {
+  -scm-slider-border-color: {{border}};
+}
+
+/* ---- Buttons and highlights: an inset line ----
+ * Always: dock icons, folders, search, list results, dialog buttons, notification buttons,
+ * today in the calendar. On hover or selection: app grid icons, searched apps, grid results,
+ * menu items (right-click menus too), Alt+Tab, calendar days and arrows. */
+
+.scm-add-borders #dash .dash-item-container .show-apps .overview-icon,
+.scm-add-borders #dash .dash-item-container .overview-tile .overview-icon,
+.scm-add-borders .app-folder,
+.scm-add-borders .search-entry,
+.scm-add-borders .list-search-result,
+.scm-add-borders .app-folder-dialog .folder-name-container .icon-button,
+.scm-add-borders .modal-dialog .modal-dialog-button-box .modal-dialog-button,
+.scm-add-borders .notification-button,
+.scm-add-borders .message .message-header .message-close-button,
+.scm-add-borders .message .message-header .message-expand-button,
+.scm-add-borders .message-notification-group .message-collapse-button,
+.scm-add-borders .calendar .calendar-day.calendar-today,
+.scm-add-borders .icon-grid .overview-tile:hover,
+.scm-add-borders .icon-grid .overview-tile:selected,
+.scm-add-borders .grid-search-results .overview-tile:hover,
+.scm-add-borders .grid-search-results .overview-tile:selected,
+.scm-add-borders .grid-search-result:hover,
+.scm-add-borders .grid-search-result:selected,
+.scm-add-borders .popup-menu-item:hover,
+.scm-add-borders .popup-menu-item:selected,
+.scm-add-borders .popup-menu-item:checked,
+.scm-add-borders .popup-menu-item:active,
+.scm-add-borders .switcher-list .item-box:selected,
+.scm-add-borders .calendar .calendar-day:hover,
+.scm-add-borders .calendar .calendar-day:selected,
+.scm-add-borders .calendar .calendar-month-header .pager-button:hover {
+  box-shadow: inset 0 0 0 1px {{border}};
+}
+
+/* Not inside the menus of toggles that are on: they take the active colors. */
+.scm-add-borders .quick-toggle-menu.scm-active .popup-menu-item:hover,
+.scm-add-borders .quick-toggle-menu.scm-active .popup-menu-item:selected,
+.scm-add-borders .quick-toggle-menu.scm-active .popup-menu-item:checked,
+.scm-add-borders .quick-toggle-menu.scm-active .popup-menu-item:active {
+  box-shadow: none;
+}
+
+/* The Do Not Disturb switch while it is off. */
+.scm-add-borders .message-list-controls .dnd-button .toggle-switch {
+  box-shadow: inset 0 0 0 1px {{border}};
+}
+.scm-add-borders .message-list-controls .dnd-button .toggle-switch:checked {
+  box-shadow: none;
+}
+
+
+/* ======================================================================
+ * Change border colors: GNOME's own borders of menus and cards, in {{border}}.
+ * With Everything with border, the borders above take it too.
+ * ====================================================================== */
+
+.scm-border-colors .popup-menu-content,
+.scm-border-colors .candidate-popup-content {
+  border-color: {{border}};
+}
+
+.scm-border-colors .message,
+.scm-border-colors .events-button,
+.scm-border-colors .world-clocks-button,
+.scm-border-colors .weather-button,
+.scm-border-colors.scm-calendar-card .calendar,
+.scm-border-colors .message-list-controls .button {
+  border-color: {{border}} !important;
+}
+
+
+/* ======================================================================
+ * Disable borders: menus and cards
+ * Borders stay 1px wide but transparent, so nothing changes size.
+ * ====================================================================== */
+
+.scm-hide-borders .popup-menu-content,
+.scm-hide-borders .candidate-popup-content {
+  border-color: transparent;
+}
+
+/* The cards GNOME outlines in light style, the calendar as card and Clear. */
+.scm-hide-borders .message,
+.scm-hide-borders .events-button,
+.scm-hide-borders .world-clocks-button,
+.scm-hide-borders .weather-button,
+.scm-hide-borders .datemenu-today-button,
+.scm-hide-borders .calendar,
+.scm-hide-borders .message-list-controls .button {
+  border-color: transparent !important;
+  box-shadow: none;
+}

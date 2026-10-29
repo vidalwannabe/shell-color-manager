@@ -1,7 +1,7 @@
 // The colors the extension offers, in the same three blocks as the stylesheets in styles/.
 // Each name is a {{marker}} in those stylesheets and a key in the schema: color-<name> for
 // light mode, color-<name>-dark for dark mode. The Light mode and Dark mode tabs show each
-// color with its title and subtitle.
+// color with its title and subtitle, and only while its `shownWhen` settings say so.
 export const COLORS = {
     'Shell': {
         'panel-fg': {
@@ -15,6 +15,11 @@ export const COLORS = {
         'dash': {
             title: 'Overview and top bar highlights',
             subtitle: 'Alt+Tab selection, app hover, app names, dash buttons, dialog buttons, folders, menu items, password field, search, top bar buttons and window close buttons',
+        },
+        'borders': {
+            title: 'Borders',
+            subtitle: 'Every border: cards, dialogs, dock, folders, menus, menu items, pop-ups, Quick Settings, search, sliders and top bar',
+            shownWhen: {on: ['customize-borders', 'border-colors'], off: ['hide-borders']},
         },
     },
     'Quick Settings': {
@@ -59,6 +64,11 @@ export const COLORS = {
     },
 };
 
+// Whether true/false settings are as `on` and `off` ask: all of `on` true, all of `off` false.
+export function settingsSay(settings, {on = [], off = []}) {
+    return on.every(key => settings.get_boolean(key)) && !off.some(key => settings.get_boolean(key));
+}
+
 // Words a color setting can hold instead of a color code: the CSS value the shell uses, and
 // what the preferences show (the swatch, 'accent' being the accent color set in GNOME
 // Settings, and a line under the code in its tooltip).
@@ -81,5 +91,5 @@ export function readColor(settings, key) {
 }
 
 // Every color name, in the order color sets save them.
-export const COLOR_NAMES = ['panel-fg', 'general', 'dash', 'qs-fg', 'qs-button', 'qs-active-fg', 'qs-active',
+export const COLOR_NAMES = ['panel-fg', 'general', 'dash', 'borders', 'qs-fg', 'qs-button', 'qs-active-fg', 'qs-active',
     'highlight', 'fg', 'fg-muted', 'card-buttons', 'card'];
